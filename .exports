@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export DIR_DOTFILES=$(pwd);
+export PYTHONIOENCODING="UTF-8"
+export DISPLAY="127.0.0.1:0.0"

@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# Let script exit when a command fail.
+set -o errexit
+
+# Let script exit if an unset variable is used.
+set -o nounset
+
+# Update package list
+sudo apt -y update
+
+for DIR in ~/.config/git ~/.config/matplotlib; do
+    if [[ ! -d $DIR ]]; then
+        echo "Created directory: '$DIR'"
+        mkdir -p $DIR
+    else
+        echo "'$DIR' exist!"
+    fi
+done
+unset DIR
+
+# Case-insensitive globbing
+shopt -s nocaseglob
+
+# Append to the Bash history file, rather than overwriting it
+shopt -s histappend
+
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell
+
+# Make symbolic links
+for FILE in ~/.dotfiles/.{vimrc,hushlogin,inputrc,bashrc,wgetrc,curlrc,bash_aliases,gitconfig}; do
+    sudo ln -sf $FILE ~/
+done
+unset FILE
+
+for FILE in ~/.dotfiles/.{exports,functions}; do
+    sudo ln -sf $FILE ~/.config/
+done
+unset FILE
+
+for FILE in ~/.dotfiles/git/.{gitattributes,gitignore}; do
+    sudo ln -sf $FILE ~/.config/git/
+done
+unset FILE
+
+sudo ln -sf ~/.dotfiles/python/matplotlibrc ~/.config/matplotlib/
+
+# Ensure DBUS connection for X410
+sudo dbus-uuidgen --ensure
+
+# End cleanup
+sudo apt -y full-upgrade
+sudo apt -y autoremove
