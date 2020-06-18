@@ -17,3 +17,6 @@ alias update='sudo apt -y update; sudo apt -y full-upgrade; sudo apt autoremove 
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 alias whois='whois -h whois-servers.net'
+alias python="python3"
+alias pip="python3 -m pip"
+alias py="python3 -m"
