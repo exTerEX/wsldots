@@ -11,7 +11,7 @@ HISTFILESIZE=2000
 HISTCONTROL=ignoreboth
 
 for file in ~/.config/.{exports,functions}; do
-	[ -r "$file" ] && [ -f "$file" ] && source "$file"
+    [ -r "$file" ] && [ -f "$file" ] && source "$file"
 done
 unset file
 
