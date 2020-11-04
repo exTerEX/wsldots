@@ -1,10 +1,5 @@
-[user]
-	name = Andreas Sagen
-	email = andreassag@hotmail.no
 [core]
-    autocrlf = true
-    excludesfile = ~/.config/git/.gitignore
-	attributesfile = ~/.config/git/.gitattributes
+	autocrlf = true
 [color]
 	ui = auto
 [color "branch"]
