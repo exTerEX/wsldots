@@ -11,7 +11,7 @@ sudo apt -y update
 sudo apt -y full-upgrade
 
 # Running under WSL (Windows Subsystem for Linux)
-if cat /proc/version | grep Microsoft; then
+if cat /proc/version | grep microsoft; then
   echo "Running in WSL mode..."
   WSL=true
 else
@@ -20,27 +20,27 @@ else
 fi
 
 # Get Windows username
-if [[ $WSL ]]; then
+if [[ $WSL == true ]]; then
   echo "Finding Windows username..."
   WINUSR=`cmd.exe /c echo %username%`
+fi
+
+if [[ -d ~/.bashrc ]]; then
+  echo "Remove .bashrc..."
+  sudo rm -rf ~/.bashrc
 fi
 
 # Install "Oh My Bash" & clean
 sh -c "$(wget https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"
 
-if [[ -d ~/.bashrc.pre-oh-my-bash ]]; then
-  echo "Remove .pre-oh-my-bash..."
-  rm -rf ~/.bashrc.pre-oh-my-bash
-fi
-
 # Define USERPATH running WSL mode
-if [[ $WSL ]]; then
+if [[ $WSL == true ]]; then
   echo "Windows 10 %USERPROFILE%..."
   USERPATH=/mnt/c/Users/$WINUSR
 fi
 
 # Use Windows .gitconfig if possible else use repo's version.
-if [[ $WSL ]]; then
+if [[ $WSL == true ]]; then
   if [[ -e $USERPATH/.gitconfig ]]; then
     echo "Using Windows' .gitconfig file..."
     ln -sf $USERPATH/.gitconfig ~/
@@ -70,10 +70,10 @@ fi
 # Remove bloat
 if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
   echo "Removing /etc/apt/apt.conf.d/20snapd.conf..."
-  sudo rm /etc/apt/apt.conf.d/20snapd.conf
+  sudo rm -f /etc/apt/apt.conf.d/20snapd.conf
 fi
 
-sudo apt autoremove snapd
+sudo apt -y autoremove snapd
 
 # Clean
 sudo apt -y autoremove
