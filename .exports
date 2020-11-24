@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-export DIR_DOTFILES=$(pwd);
-export PYTHONIOENCODING="UTF-8"

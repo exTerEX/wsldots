@@ -1,47 +1,84 @@
 #!/usr/bin/env bash
 
-# Let script exit when a command fail.
+# Let script exit when a command fail
 set -o errexit
 
-# Let script exit if an unset variable is used.
+# Let script exit if an unset variable is used
 set -o nounset
 
-# Update package list
+# Update packages
 sudo apt -y update
+sudo apt -y full-upgrade
 
-# Case-insensitive globbing
-shopt -s nocaseglob
+# Running under WSL (Windows Subsystem for Linux)
+if cat /proc/version | grep Microsoft; then
+  echo "Running in WSL mode..."
+  WSL=true
+else
+  echo "Running in normal mode..."
+  WSL=false
+fi
 
-# Append to the Bash history file, rather than overwriting it
-shopt -s histappend
+# Get Windows username
+if [[ $WSL ]]; then
+  echo "Finding Windows username..."
+  WINUSR=`cmd.exe /c echo %username%`
+fi
 
-# Autocorrect typos in path names when using `cd`
-shopt -s cdspell
+# Install "Oh My Bash" & clean
+sh -c "$(wget https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"
 
-# Make symbolic links
-for FILE in ~/.dotfiles/.{bashrc,bash_aliases}; do
-    sudo ln -sf $FILE ~/
-done
-unset FILE
+if [[ -d ~/.bashrc.pre-oh-my-bash ]]; then
+  echo "Remove .pre-oh-my-bash..."
+  rm -rf ~/.bashrc.pre-oh-my-bash
+fi
 
-for FILE in ~/.dotfiles/.{gitconfig,inputrc,wgetrc}; do
-    sudo ln -sf $FILE ~/
-done
-unset FILE
+# Define USERPATH running WSL mode
+if [[ $WSL ]]; then
+  echo "Windows 10 %USERPROFILE%..."
+  USERPATH=/mnt/c/Users/$WINUSR
+fi
 
-for FILE in ~/.dotfiles/.{exports,functions}; do
-    sudo ln -sf $FILE ~/.config/
-done
-unset FILE
+# Use Windows .gitconfig if possible else use repo's version.
+if [[ $WSL ]]; then
+  if [[ -e $USERPATH/.gitconfig ]]; then
+    echo "Using Windows' .gitconfig file..."
+    ln -sf $USERPATH/.gitconfig ~/
+  else
+    echo "Using repo's .gitignore file..."
+    ln -sf .gitconfig ~/
+  fi
+else
+  echo "Using repo's .gitignore file..."
+  ln -sf .gitconfig ~/
+fi
 
-# TODO: Configure git name and email
+if [[ $WSL ]]; then
+  if [[ ! -d ~/.ssh ]]; then
+    echo "Creating folder ~/.ssh/..."
+    mkdir .ssh
+  fi
+
+  echo "Copying .ssh files to .ssh/..."
+  cp $USERPATH/.ssh/id_rsa ~/.ssh/
+  cp $USERPATH/.ssh/id_rsa.pub ~/.ssh/
+
+  echo "Creating symlink to known_hosts..."
+  ln -sf $USERPATH/.ssh/known_hosts ~/.ssh/known_hosts
+fi
 
 # Remove bloat
-sudo rm /etc/apt/apt.conf.d/20snapd.conf
-sudo apt autoremove snapd curl
+if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
+  echo "Removing /etc/apt/apt.conf.d/20snapd.conf..."
+  sudo rm /etc/apt/apt.conf.d/20snapd.conf
+fi
 
-# End cleanup
-sudo apt -y full-upgrade
+sudo apt autoremove snapd
+
+# Clean
 sudo apt -y autoremove
-sudo apt clean -y 
-rm -rf /var/lib/apt/lists/*
+if [[ -d /var/lib/apt/lists ]]; then
+  echo "Removing package list..."
+  rm -rf /var/lib/apt/lists/*
+fi
+sudo apt clean -y
