@@ -1,0 +1,12 @@
+* text=auto
+
+# Scripts
+*.sh    text eol=lf
+
+# Config files
+.*rc    text eol=lf
+
+# Prevent export
+.gitattributes  export-ignore
+.gitignore      export-ignore
+.gitkeep        export-ignore
