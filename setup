@@ -56,7 +56,7 @@ else
 fi
 
 if $WSL; then
-  if [[ ! -d ~/.ssh ]]; then
+  if [[ ! -e ~/.ssh ]]; then
     echo "Creating folder ~/.ssh/..."
     mkdir ~/.ssh
   fi
