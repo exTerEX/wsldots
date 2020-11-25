@@ -22,7 +22,7 @@ fi
 # Get Windows username
 if $WSL; then
   echo "Finding Windows username..."
-  WINUSR=`cmd.exe /mnt/c "echo %USERNAME%"`
+  WINUSR=`powershell.exe '$env:UserName'`
 fi
 
 if -d ~/.bashrc; then
