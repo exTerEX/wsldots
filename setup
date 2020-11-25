@@ -42,7 +42,7 @@ fi
 # Use Windows .gitconfig if possible else use repo's version.
 if $WSL; then
   if [[ -e "$USERPATH/.gitconfig" && ! -e ~/.gitconfig ]]; then
-    echo "Using Windows' .gitconfig file..."
+    echo "Using Windows .gitconfig file..."
     ln -sf $USERPATH/.gitconfig ~/
   elif [[ ! -e ~/.gitconfig ]]; then
     echo "Using repo's .gitignore file..."
