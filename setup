@@ -22,7 +22,7 @@ fi
 # Get Windows username
 if $WSL; then
   echo "Finding Windows username..."
-  WINUSR=`powershell.exe '$env:UserName'`
+  WINDOWS_USER=$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')
 fi
 
 if -d ~/.bashrc; then
@@ -36,7 +36,7 @@ sh -c "$(wget https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh
 # Define USERPATH running WSL mode
 if $WSL; then
   echo "Windows 10 %USERPROFILE%..."
-  USERPATH=/mnt/c/Users/$WINUSR
+  USERPATH=/mnt/c/Users/$WINDOWS_USER
 fi
 
 # Use Windows .gitconfig if possible else use repo's version.
