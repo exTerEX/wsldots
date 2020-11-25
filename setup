@@ -25,13 +25,13 @@ if $WSL; then
   WINDOWS_USER=$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')
 fi
 
-if -d ~/.bashrc; then
+if [[ -e ~/.bashrc ]]; then
   echo "Remove .bashrc..."
   sudo rm -rf ~/.bashrc
 fi
 
 # Install "Oh My Bash" & clean
-sh -c "$(wget https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"
+sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 
 # Define USERPATH running WSL mode
 if $WSL; then
@@ -58,27 +58,27 @@ fi
 if $WSL; then
   if [[ ! -d ~/.ssh ]]; then
     echo "Creating folder ~/.ssh/..."
-    mkdir .ssh
+    mkdir ~/.ssh
   fi
 
-  if [[ ! -e ~/.ssh/id_rsa ]]
+  if [[ ! -e ~/.ssh/id_rsa ]]; then
     echo "Copying .ssh files to .ssh/..."
     cp $USERPATH/.ssh/id_rsa ~/.ssh/
   fi
 
-  if [[ ! -e ~/.ssh/id_rsa.pub ]]
+  if [[ ! -e ~/.ssh/id_rsa.pub ]]; then
     echo "Copying .ssh files to .ssh/..."
     cp $USERPATH/.ssh/id_rsa.pub ~/.ssh/
   fi
 
-  if [[ ! -e ~/.ssh/known_hosts ]]
+  if [[ ! -e ~/.ssh/known_hosts ]]; then
     echo "Creating symlink to known_hosts..."
     ln -sf $USERPATH/.ssh/known_hosts ~/.ssh/known_hosts
   fi
 fi
 
 # Remove bloat
-if -e /etc/apt/apt.conf.d/20snapd.conf; then
+if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
   echo "Removing /etc/apt/apt.conf.d/20snapd.conf..."
   sudo rm -f /etc/apt/apt.conf.d/20snapd.conf
 fi
@@ -87,7 +87,7 @@ sudo apt -y autoremove snapd
 
 # Clean
 sudo apt -y autoremove
-if -d /var/lib/apt/lists; then
+if [[ -d /var/lib/apt/lists ]]; then
   echo "Removing package list..."
   rm -rf /var/lib/apt/lists/*
 fi
