@@ -41,16 +41,18 @@ fi
 
 # Use Windows .gitconfig if possible else use repo's version.
 if $WSL; then
-  if [[ -e "$USERPATH/.gitconfig" ]]; then
+  if [[ -e "$USERPATH/.gitconfig" && ! -e ~/.gitconfig ]]; then
     echo "Using Windows' .gitconfig file..."
     ln -sf $USERPATH/.gitconfig ~/
-  else
+  elif [[ ! -e ~/.gitconfig ]]; then
     echo "Using repo's .gitignore file..."
     ln -sf .gitconfig ~/
   fi
 else
-  echo "Using repo's .gitignore file..."
-  ln -sf .gitconfig ~/
+  if [[ ! -e ~/.gitconfig ]]; then
+    echo "Using repo's .gitignore file..."
+    ln -sf .gitconfig ~/
+  fi
 fi
 
 if $WSL; then
@@ -59,12 +61,20 @@ if $WSL; then
     mkdir .ssh
   fi
 
-  echo "Copying .ssh files to .ssh/..."
-  cp $USERPATH/.ssh/id_rsa ~/.ssh/
-  cp $USERPATH/.ssh/id_rsa.pub ~/.ssh/
+  if [[ ! -e ~/.ssh/id_rsa ]]
+    echo "Copying .ssh files to .ssh/..."
+    cp $USERPATH/.ssh/id_rsa ~/.ssh/
+  fi
 
-  echo "Creating symlink to known_hosts..."
-  ln -sf $USERPATH/.ssh/known_hosts ~/.ssh/known_hosts
+  if [[ ! -e ~/.ssh/id_rsa.pub ]]
+    echo "Copying .ssh files to .ssh/..."
+    cp $USERPATH/.ssh/id_rsa.pub ~/.ssh/
+  fi
+
+  if [[ ! -e ~/.ssh/known_hosts ]]
+    echo "Creating symlink to known_hosts..."
+    ln -sf $USERPATH/.ssh/known_hosts ~/.ssh/known_hosts
+  fi
 fi
 
 # Remove bloat
