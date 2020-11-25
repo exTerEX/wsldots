@@ -41,7 +41,7 @@ fi
 
 # Use Windows .gitconfig if possible else use repo's version.
 if $WSL; then
-  if -e $USERPATH/.gitconfig; then
+  if [[ -e "$USERPATH/.gitconfig" ]]; then
     echo "Using Windows' .gitconfig file..."
     ln -sf $USERPATH/.gitconfig ~/
   else
@@ -54,7 +54,7 @@ else
 fi
 
 if $WSL; then
-  if ! -d ~/.ssh; then
+  if [[ ! -d ~/.ssh ]]; then
     echo "Creating folder ~/.ssh/..."
     mkdir .ssh
   fi
