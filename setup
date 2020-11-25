@@ -22,7 +22,7 @@ fi
 # Get Windows username
 if $WSL; then
   echo "Finding Windows username..."
-  WINUSR=`cmd.exe /c echo %username%`
+  WINUSR=`cmd.exe /mnt/c "echo %USERNAME%"`
 fi
 
 if -d ~/.bashrc; then
@@ -54,7 +54,7 @@ else
 fi
 
 if $WSL; then
-  if [[ ! -d ~/.ssh ]]; then
+  if ! -d ~/.ssh; then
     echo "Creating folder ~/.ssh/..."
     mkdir .ssh
   fi
@@ -68,7 +68,7 @@ if $WSL; then
 fi
 
 # Remove bloat
-if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
+if -e /etc/apt/apt.conf.d/20snapd.conf; then
   echo "Removing /etc/apt/apt.conf.d/20snapd.conf..."
   sudo rm -f /etc/apt/apt.conf.d/20snapd.conf
 fi
