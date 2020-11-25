@@ -20,12 +20,12 @@ else
 fi
 
 # Get Windows username
-if [[ $WSL == true ]]; then
+if $WSL; then
   echo "Finding Windows username..."
   WINUSR=`cmd.exe /c echo %username%`
 fi
 
-if [[ -d ~/.bashrc ]]; then
+if -d ~/.bashrc; then
   echo "Remove .bashrc..."
   sudo rm -rf ~/.bashrc
 fi
@@ -34,14 +34,14 @@ fi
 sh -c "$(wget https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"
 
 # Define USERPATH running WSL mode
-if [[ $WSL == true ]]; then
+if $WSL; then
   echo "Windows 10 %USERPROFILE%..."
   USERPATH=/mnt/c/Users/$WINUSR
 fi
 
 # Use Windows .gitconfig if possible else use repo's version.
-if [[ $WSL == true ]]; then
-  if [[ -e $USERPATH/.gitconfig ]]; then
+if $WSL; then
+  if -e $USERPATH/.gitconfig; then
     echo "Using Windows' .gitconfig file..."
     ln -sf $USERPATH/.gitconfig ~/
   else
@@ -53,7 +53,7 @@ else
   ln -sf .gitconfig ~/
 fi
 
-if [[ $WSL ]]; then
+if $WSL; then
   if [[ ! -d ~/.ssh ]]; then
     echo "Creating folder ~/.ssh/..."
     mkdir .ssh
@@ -77,7 +77,7 @@ sudo apt -y autoremove snapd
 
 # Clean
 sudo apt -y autoremove
-if [[ -d /var/lib/apt/lists ]]; then
+if -d /var/lib/apt/lists; then
   echo "Removing package list..."
   rm -rf /var/lib/apt/lists/*
 fi
