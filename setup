@@ -28,6 +28,8 @@ fi
 if [[ -e ~/.bashrc && ! -e ~/.oh-my-bash ]]; then
   echo "Remove .bashrc..."
   sudo rm -rf ~/.bashrc
+else
+  echo "Not removing .bashrc..."
 fi
 
 # Install "Oh My Bash" & clean
@@ -39,6 +41,8 @@ if $WSL; then
   USERPATH=/mnt/c/Users/$WINDOWS_USER
 fi
 
+LCONFIG = [[ ! -e ~/.gitconfig ]]
+
 # Use Windows .gitconfig if possible else use repo version.
 if $WSL; then
   if [[ -e "$USERPATH/.gitconfig" && ! -e ~/.gitconfig ]]; then
@@ -48,7 +52,7 @@ if $WSL; then
     echo "Using repo .gitignore file..."
     ln -sf .gitconfig ~/
   else
-    echo "Not using .gitignore"
+    echo "Not using .gitignore..."
   fi
 else
   if [[ ! -e ~/.gitconfig ]]; then
