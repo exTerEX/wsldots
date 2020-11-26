@@ -32,55 +32,45 @@ else
   echo "Not removing .bashrc..."
 fi
 
-# Install "Oh My Bash" & clean
-sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-
 # Define USERPATH running WSL mode
 if $WSL; then
   echo "Windows 10 %USERPROFILE%..."
   USERPATH=/mnt/c/Users/$WINDOWS_USER
 fi
 
-LCONFIG = [[ ! -e ~/.gitconfig ]]
-
-# Use Windows .gitconfig if possible else use repo version.
+# Use Windows .gitconfig if possible else use repo version
 if $WSL; then
-  if [[ -e "$USERPATH/.gitconfig" && ! -e ~/.gitconfig ]]; then
+  if [[ -e $USERPATH/.gitconfig ]]; then
     echo "Using Windows .gitconfig file..."
-    ln -sf $USERPATH/.gitconfig ~/
-  elif [[ ! -e ~/.gitconfig ]]; then
-    echo "Using repo .gitignore file..."
-    ln -sf .gitconfig ~/
+    sudo ln -sf $USERPATH/.gitconfig ~/
   else
-    echo "Not using .gitignore..."
+    echo "Using repo .gitconfig file..."
+    sudo ln -sf ~/.dotfiles/.gitconfig ~/
   fi
 else
   if [[ ! -e ~/.gitconfig ]]; then
-    echo "Using repo .gitignore file..."
-    ln -sf .gitconfig ~/
+    echo "Using repo .gitconfig file..."
+    sudo ln -sf ~/.dotfiles/.gitconfig ~/
   fi
 fi
 
+# Use Windows .ssh key and known_hosts if possible
 if $WSL; then
   if [[ ! -e ~/.ssh ]]; then
-    echo "Creating folder ~/.ssh/..."
-    mkdir ~/.ssh
-  fi
-
-  if [[ ! -e ~/.ssh/id_rsa ]]; then
     echo "Copying .ssh files to .ssh/..."
-    cp $USERPATH/.ssh/id_rsa ~/.ssh/
+    cp -r $USERPATH/.ssh ~/
   fi
 
-  if [[ ! -e ~/.ssh/id_rsa.pub ]]; then
-    echo "Copying .ssh files to .ssh/..."
-    cp $USERPATH/.ssh/id_rsa.pub ~/.ssh/
-  fi
-
-  if [[ ! -e ~/.ssh/known_hosts ]]; then
+  if [[ ! -h ~/.ssh/known_hosts ]]; then
     echo "Creating symlink to known_hosts..."
-    ln -sf $USERPATH/.ssh/known_hosts ~/.ssh/known_hosts
+    sudo ln -sf $USERPATH/.ssh/known_hosts ~/.ssh/known_hosts
   fi
+
+  sudo chmod -R 600 ~/.ssh
+
+  # TODO: Make so it automatically find name of file
+  #       (probably using search for *.pub file)
+  # sudo ssh-add ~/.ssh/id_rsa
 fi
 
 # Remove bloat
@@ -98,3 +88,6 @@ if [[ -d /var/lib/apt/lists ]]; then
   sudo rm -rf /var/lib/apt/lists/*
 fi
 sudo apt clean -y
+
+# Install oh-my-bash
+sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
