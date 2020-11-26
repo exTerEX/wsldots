@@ -66,10 +66,11 @@ if $WSL; then
     sudo ln -sf $USERPATH/.ssh/known_hosts ~/.ssh/known_hosts
   fi
 
-  sudo chmod -R 600 ~/.ssh
-
   # TODO: Make so it automatically find name of file
   #       (probably using search for *.pub file)
+  # sudo chmod 600 ~/.ssh/id_rsa
+  # sudo chmod 600 ~/.ssh/id_rsa.pub
+  # TODO: Potential to performe chmod in one line?
   # sudo ssh-add ~/.ssh/id_rsa
 fi
 
@@ -90,4 +91,6 @@ fi
 sudo apt clean -y
 
 # Install oh-my-bash
-sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+if [[ ! -e ~/.oh-my-bash ]]; then
+  sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+fi
