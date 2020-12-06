@@ -91,7 +91,6 @@ sudo apt -q=1 clean
 #fi
 
 # Install oh-my-bash
-# TODO: Fix issue with installing oh-my-bash
-#if [[ ! -e ~/.oh-my-bash ]]; then
-#  sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-#fi
+if [[ ! -e ~/.oh-my-bash ]]; then
+  sudo sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+fi
