@@ -6,9 +6,17 @@ set -o errexit
 # Let script exit if an unset variable is used
 set -o nounset
 
+# Remove bloat
+if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
+  echo "Removing /etc/apt/apt.conf.d/20snapd.conf..."
+  sudo rm -f /etc/apt/apt.conf.d/20snapd.conf
+fi
+
+sudo apt-get -q=2 --purge remove snapd
+
 # Update packages
-sudo apt -q=2 update
-sudo apt -q=2 full-upgrade
+sudo apt-get -q=2 update
+sudo apt-get -q=2 full-upgrade
 
 # Running under WSL (Windows Subsystem for Linux)
 if cat /proc/version | grep microsoft; then
@@ -67,21 +75,13 @@ if $WSL; then
   # sudo ssh-add ~/.ssh/id_rsa
 fi
 
-# Remove bloat
-if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
-  echo "Removing /etc/apt/apt.conf.d/20snapd.conf..."
-  sudo rm -f /etc/apt/apt.conf.d/20snapd.conf
-fi
-
-sudo apt -q=2 --purge remove snapd
-
 # Clean
-sudo apt -q=2 autoremove
+sudo apt-get -q=2 autoremove
 if [[ -d /var/lib/apt/lists ]]; then
   echo "Removing package list..."
   sudo rm -rf /var/lib/apt/lists/*
 fi
-sudo apt -q=1 clean
+sudo apt-get -q=1 clean
 
 #if [[ -e ~/.bashrc && ! -e ~/.oh-my-bash ]]; then
 #  echo "Remove .bashrc..."
