@@ -84,12 +84,12 @@ fi
 sudo apt-get -y clean
 
 # Remove .bashrc, if .oh-my-bash is present
-if [[ -e ~/.bashrc && ! -e ~/.oh-my-bash ]]; then
-  echo "Remove .bashrc..."
-  sudo rm -rf ~/.bashrc
-else
-  echo "Not removing .bashrc..."
-fi
+#if [[ -e ~/.bashrc && ! -e ~/.oh-my-bash ]]; then
+#  echo "Remove .bashrc..."
+#  sudo rm -rf ~/.bashrc
+#else
+#  echo "Not removing .bashrc..."
+#fi
 
 # Install oh-my-bash
 if [[ ! -e ~/.oh-my-bash ]]; then
