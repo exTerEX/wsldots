@@ -83,15 +83,7 @@ if [[ -d /var/lib/apt/lists ]]; then
 fi
 sudo apt-get -y clean
 
-# Remove .bashrc, if .oh-my-bash is present
-#if [[ -e ~/.bashrc && ! -e ~/.oh-my-bash ]]; then
-#  echo "Remove .bashrc..."
-#  sudo rm -rf ~/.bashrc
-#else
-#  echo "Not removing .bashrc..."
-#fi
-
 # Install oh-my-bash
-if [[ ! -e ~/.oh-my-bash ]]; then
-  sudo sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-fi
+#if [[ ! -e ~/.oh-my-bash ]]; then
+#  sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+#fi
