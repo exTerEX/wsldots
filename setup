@@ -22,14 +22,7 @@ fi
 # Get Windows username
 if $WSL; then
   echo "Finding Windows username..."
-  WINDOWS_USER=$(/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe '$env:UserName')
-fi
-
-if [[ -e ~/.bashrc && ! -e ~/.oh-my-bash ]]; then
-  echo "Remove .bashrc..."
-  sudo rm -rf ~/.bashrc
-else
-  echo "Not removing .bashrc..."
+  WINDOWS_USER=$(/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe '$env:UserName'  | sed -e 's/\r//g')
 fi
 
 # Define USERPATH running WSL mode
@@ -90,7 +83,15 @@ if [[ -d /var/lib/apt/lists ]]; then
 fi
 sudo apt clean -y
 
+#if [[ -e ~/.bashrc && ! -e ~/.oh-my-bash ]]; then
+#  echo "Remove .bashrc..."
+#  sudo rm -rf ~/.bashrc
+#else
+#  echo "Not removing .bashrc..."
+#fi
+
 # Install oh-my-bash
-if [[ ! -e ~/.oh-my-bash ]]; then
-  sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-fi
+# TODO: Fix issue with installing oh-my-bash
+#if [[ ! -e ~/.oh-my-bash ]]; then
+#  sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+#fi
