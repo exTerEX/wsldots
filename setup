@@ -12,7 +12,7 @@ if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
   sudo rm -f /etc/apt/apt.conf.d/20snapd.conf
 fi
 
-sudo apt-get --purge remove snapd
+sudo apt-get --purge -y remove snapd
 
 # Update packages
 sudo apt-get -q=2 update
@@ -76,12 +76,12 @@ if $WSL; then
 fi
 
 # Clean
-sudo apt-get autoremove
+sudo apt-get -y autoremove
 if [[ -d /var/lib/apt/lists ]]; then
   echo "Removing package list..."
   sudo rm -rf /var/lib/apt/lists/*
 fi
-sudo apt-get clean
+sudo apt-get -y clean
 
 # Remove .bashrc, if .oh-my-bash is present
 if [[ -e ~/.bashrc && ! -e ~/.oh-my-bash ]]; then
