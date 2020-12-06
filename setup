@@ -8,7 +8,7 @@ set -o nounset
 
 # Remove bloat
 if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
-  echo "Removing /etc/apt/apt.conf.d/20snapd.conf..."
+  sudo echo "Removing /etc/apt/apt.conf.d/20snapd.conf..."
   sudo rm -f /etc/apt/apt.conf.d/20snapd.conf
 fi
 
@@ -83,12 +83,13 @@ if [[ -d /var/lib/apt/lists ]]; then
 fi
 sudo apt-get -q=1 clean
 
-#if [[ -e ~/.bashrc && ! -e ~/.oh-my-bash ]]; then
-#  echo "Remove .bashrc..."
-#  sudo rm -rf ~/.bashrc
-#else
-#  echo "Not removing .bashrc..."
-#fi
+# Remove .bashrc, if .oh-my-bash is present
+if [[ -e ~/.bashrc && ! -e ~/.oh-my-bash ]]; then
+  echo "Remove .bashrc..."
+  sudo rm -rf ~/.bashrc
+else
+  echo "Not removing .bashrc..."
+fi
 
 # Install oh-my-bash
 if [[ ! -e ~/.oh-my-bash ]]; then
