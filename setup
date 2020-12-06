@@ -7,8 +7,8 @@ set -o errexit
 set -o nounset
 
 # Update packages
-sudo apt -y update
-sudo apt -y full-upgrade
+sudo apt -q=2 update
+sudo apt -q=2 full-upgrade
 
 # Running under WSL (Windows Subsystem for Linux)
 if cat /proc/version | grep microsoft; then
@@ -73,15 +73,15 @@ if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
   sudo rm -f /etc/apt/apt.conf.d/20snapd.conf
 fi
 
-sudo apt -y autoremove snapd
+sudo apt -q=2 --purge remove snapd
 
 # Clean
-sudo apt -y autoremove
+sudo apt -q=2 autoremove
 if [[ -d /var/lib/apt/lists ]]; then
   echo "Removing package list..."
   sudo rm -rf /var/lib/apt/lists/*
 fi
-sudo apt clean -y
+sudo apt -q=1 clean
 
 #if [[ -e ~/.bashrc && ! -e ~/.oh-my-bash ]]; then
 #  echo "Remove .bashrc..."
