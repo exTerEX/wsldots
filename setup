@@ -15,13 +15,18 @@ set -o nounset
 #sudo apt-get --purge -y remove snapd
 
 # Make some needed folders
-if [[ ! -e ~/.config ]]; then
+if [[ ! -d ~/.config ]]; then
   mkdir ~/.config
 fi
 
 # Link .config files
-sudo ln -s ~/.dotfiles/.bash_aliases ~/.config/.bash_aliases
-sudo ln -s ~/.dotfiles/.bash_functions ~/.config/.bash_functions
+if [[ ! -h ~/.config/.bash_aliases ]]; then
+  sudo ln -s ~/.dotfiles/.bash_aliases ~/.config/.bash_aliases
+fi
+
+if [[ ! -h ~/.config/.bash_functions ]]; then
+  sudo ln -s ~/.dotfiles/.bash_functions ~/.config/.bash_functions
+fi
 
 # Link .bashrc
 sudo ln -s ~/.dotfiles/.bashrc ~/.config/.bashrc
