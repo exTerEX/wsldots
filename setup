@@ -29,7 +29,9 @@ if [[ ! -h ~/.config/.bash_functions ]]; then
 fi
 
 # Link .bashrc
-sudo ln -s ~/.dotfiles/.bashrc ~/.config/.bashrc
+if [[ ! -h ~/.bashrc ]]; then
+  sudo ln -sf ~/.dotfiles/.bashrc ~/.bashrc
+fi
 
 # Update packages
 sudo apt-get -q=2 update
