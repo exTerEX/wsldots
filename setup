@@ -20,11 +20,11 @@ if [[ ! -e ~/.config ]]; then
 fi
 
 # Link .config files
-sudo -s ~/.dotfiles/.bash_aliases ~/.config/.bash_aliases
-sudo -s ~/.dotfiles/.bash_functions ~/.config/.bash_functions
+sudo ln -s ~/.dotfiles/.bash_aliases ~/.config/.bash_aliases
+sudo ln -s ~/.dotfiles/.bash_functions ~/.config/.bash_functions
 
 # Link .bashrc
-sudo -s ~/.dotfiles/.bash_functions ~/.config/.bash_functions
+sudo ln -s ~/.dotfiles/.bashrc ~/.config/.bashrc
 
 # Update packages
 sudo apt-get -q=2 update
