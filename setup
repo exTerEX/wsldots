@@ -21,11 +21,11 @@ fi
 
 # Link .config files
 if [[ ! -h ~/.config/.bash_aliases ]]; then
-  sudo ln -s ~/.dotfiles/.bash_aliases ~/.config/.bash_aliases
+  sudo ln -sf ~/.dotfiles/.bash_aliases ~/.config/.bash_aliases
 fi
 
 if [[ ! -h ~/.config/.bash_functions ]]; then
-  sudo ln -s ~/.dotfiles/.bash_functions ~/.config/.bash_functions
+  sudo ln -sf ~/.dotfiles/.bash_functions ~/.config/.bash_functions
 fi
 
 # Link .bashrc
