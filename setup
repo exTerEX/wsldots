@@ -15,7 +15,9 @@ set -o nounset
 #sudo apt-get --purge -y remove snapd
 
 # Make some needed folders
-mkdir ~/.config
+if [[ ! -e ~/.config ]]; then
+  mkdir ~/.config
+fi
 
 # Link .config files
 sudo -s ~/.dotfiles/.bash_aliases ~/.config/.bash_aliases
