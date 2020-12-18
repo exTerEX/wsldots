@@ -6,20 +6,31 @@ set -o errexit
 # Let script exit if an unset variable is used
 set -o nounset
 
-# Remove bloat
-if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
-  sudo echo "Removing /etc/apt/apt.conf.d/20snapd.conf..."
-  sudo rm -f /etc/apt/apt.conf.d/20snapd.conf
+# Make folders
+if [[ ! -d ~/.config ]]; then
+  mkdir ~/.config
 fi
 
-sudo apt-get --purge -y remove snapd
+# Link .config files
+if [[ ! -h ~/.config/.bash_aliases ]]; then
+  sudo ln -sf ~/.dotfiles/.bash_aliases ~/.config/.bash_aliases
+fi
+
+if [[ ! -h ~/.config/.bash_functions ]]; then
+  sudo ln -sf ~/.dotfiles/.bash_functions ~/.config/.bash_functions
+fi
+
+# Link .bashrc
+if [[ ! -h ~/.bashrc ]]; then
+  sudo ln -sf ~/.dotfiles/.bashrc ~/.bashrc
+fi
 
 # Update packages
 sudo apt-get -q=2 update
 sudo apt-get -q=2 full-upgrade
 
 # Running under WSL (Windows Subsystem for Linux)
-if cat /proc/version | grep microsoft; then
+if cat /proc/version | grep -q microsoft; then
   echo "Running in WSL mode..."
   WSL=true
 else
@@ -30,7 +41,7 @@ fi
 # Get Windows username
 if $WSL; then
   echo "Finding Windows username..."
-  WINDOWS_USER=$(/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe '$env:UserName'  | sed -e 's/\r//g')
+  WINDOWS_USER=$(/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe '$env:UserName' | sed -e 's/\r//g')
 fi
 
 # Define USERPATH running WSL mode
@@ -83,7 +94,3 @@ if [[ -d /var/lib/apt/lists ]]; then
 fi
 sudo apt-get -y clean
 
-# Install oh-my-bash
-#if [[ ! -e ~/.oh-my-bash ]]; then
-#  sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-#fi
