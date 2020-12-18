@@ -7,12 +7,22 @@ set -o errexit
 set -o nounset
 
 # Remove bloat
-if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
-  sudo echo "Removing /etc/apt/apt.conf.d/20snapd.conf..."
-  sudo rm -f /etc/apt/apt.conf.d/20snapd.conf
-fi
+#if [[ -e /etc/apt/apt.conf.d/20snapd.conf ]]; then
+#  sudo echo "Removing /etc/apt/apt.conf.d/20snapd.conf..."
+#  sudo rm -f /etc/apt/apt.conf.d/20snapd.conf
+#fi
 
-sudo apt-get --purge -y remove snapd
+#sudo apt-get --purge -y remove snapd
+
+# Make some needed folders
+mkdir ~/.config
+
+# Link .config files
+sudo -s ~/.dotfiles/.bash_aliases ~/.config/.bash_aliases
+sudo -s ~/.dotfiles/.bash_functions ~/.config/.bash_functions
+
+# Link .bashrc
+sudo -s ~/.dotfiles/.bash_functions ~/.config/.bash_functions
 
 # Update packages
 sudo apt-get -q=2 update
@@ -30,7 +40,7 @@ fi
 # Get Windows username
 if $WSL; then
   echo "Finding Windows username..."
-  WINDOWS_USER=$(/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe '$env:UserName'  | sed -e 's/\r//g')
+  WINDOWS_USER=$(/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe '$env:UserName' | sed -e 's/\r//g')
 fi
 
 # Define USERPATH running WSL mode
@@ -83,7 +93,3 @@ if [[ -d /var/lib/apt/lists ]]; then
 fi
 sudo apt-get -y clean
 
-# Install oh-my-bash
-#if [[ ! -e ~/.oh-my-bash ]]; then
-#  sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-#fi
