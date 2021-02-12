@@ -77,14 +77,19 @@ if $WSL; then
     echo "Creating symlink to known_hosts..."
     sudo ln -sf $USERPATH/.ssh/known_hosts ~/.ssh/known_hosts
   fi
-
-  # TODO: Make so it automatically find name of file
-  #       (probably using search for *.pub file)
-  # sudo chmod 600 ~/.ssh/id_rsa
-  # sudo chmod 600 ~/.ssh/id_rsa.pub
-  # TODO: Potential to performe chmod in one line?
-  # sudo ssh-add ~/.ssh/id_rsa
 fi
+
+sudo chmod -R 600 ~/.ssh/id_rsa
+sudo chmod -R 600 ~/.ssh/id_rsa.pub
+
+# Install python
+sudo apt-get -y install --no-install-recommends python3 python3-pip pipenv
+
+sudo update-alternatives --install /usr/local/bin/python python /usr/bin/python3 1
+sudo update-alternatives --install /usr/local/bin/pip pip /usr/bin/pip3 1
+
+# Install golang
+sudo apt-get -y install --no-install-recommends golang
 
 # Clean
 sudo apt-get -y autoremove
@@ -93,4 +98,3 @@ if [[ -d /var/lib/apt/lists ]]; then
   sudo rm -rf /var/lib/apt/lists/*
 fi
 sudo apt-get -y clean
-
