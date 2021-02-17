@@ -4,22 +4,22 @@
 set -o errexit
 
 # Make folders
-if [[ ! -d ~/.config ]]; then
-    mkdir ~/.config
+if [[ ! -d $HOME/.config ]]; then
+    mkdir $HOME/.config
 fi
 
 # Link .config files
-if [[ ! -h ~/.config/.bash_aliases ]]; then
-    sudo ln -sf ~/.dotfiles/.bash_aliases ~/.config/.bash_aliases
+if [[ ! -h $HOME/.config/.bash_aliases ]]; then
+    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bash_aliases $HOME/.config/.bash_aliases
 fi
 
-if [[ ! -h ~/.config/.bash_functions ]]; then
-    sudo ln -sf ~/.dotfiles/.bash_functions ~/.config/.bash_functions
+if [[ ! -h $HOME/.config/.bash_functions ]]; then
+    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bash_functions $HOME/.config/.bash_functions
 fi
 
 # Link .bashrc
-if [[ ! -h ~/.bashrc ]]; then
-    sudo ln -sf ~/.dotfiles/.bashrc ~/.bashrc
+if [[ ! -h $HOME/.bashrc ]]; then
+    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bashrc $HOME/.bashrc
 fi
 
 # Update packages
@@ -66,25 +66,25 @@ if $WSL; then
         sudo ln -sf $USERPATH/.gitconfig ~/
     else
         echo "Using repo .gitconfig file..."
-        sudo ln -sf ~/.dotfiles/.gitconfig ~/
+        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.gitconfig $HOME/
     fi
 else
-    if [[ ! -e ~/.gitconfig ]]; then
+    if [[ ! -e $HOME/.gitconfig ]]; then
         echo "Using repo .gitconfig file..."
-        sudo ln -sf ~/.dotfiles/.gitconfig ~/
+        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.gitconfig $HOME/
     fi
 fi
 
 # Use Windows .ssh key and known_hosts if possible
 if $WSL; then
-    if [[ ! -e ~/.ssh ]]; then
+    if [[ ! -e $HOME/.ssh ]]; then
         echo "Copying .ssh files to .ssh/..."
         cp -r $USERPATH/.ssh ~/
     fi
 
     sudo chmod 600 ~/.ssh/*
 
-    if [[ ! -h ~/.ssh/known_hosts ]]; then
+    if [[ ! -h $HOME/.ssh/known_hosts ]]; then
         echo "Creating symlink to known_hosts..."
         sudo ln -sf $USERPATH/.ssh/known_hosts ~/.ssh/known_hosts
     fi
