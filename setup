@@ -3,9 +3,6 @@
 # Let script exit when a command fail
 set -o errexit
 
-# Let script exit if an unset variable is used
-set -o nounset
-
 # Make folders
 if [[ ! -d ~/.config ]]; then
   mkdir ~/.config
@@ -95,9 +92,6 @@ fi
 
 # Update image
 sudo apt -y full-upgrade
-
-# Allow oh-my-bash to run
-unset -o nounset
 
 ##### FROM: Oh-My-Bash installer.sh #####
 
