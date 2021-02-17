@@ -96,6 +96,9 @@ fi
 # Update image
 sudo apt full-upgrade
 
+# Allow oh-my-bash to run
+unset -o nounset
+
 ##### FROM: Oh-My-Bash installer.sh #####
 
 # Copyright 2017-2020 Toan Nguyen and contributors (https://github.com/ohmybash/oh-my-bash/graphs/contributors)
