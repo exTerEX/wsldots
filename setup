@@ -17,11 +17,6 @@ if [[ ! -h $HOME/.config/.bash_functions ]]; then
     sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bash_functions $HOME/.config/.bash_functions
 fi
 
-# Link .bashrc
-if [[ ! -h $HOME/.bashrc ]]; then
-    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bashrc $HOME/.bashrc
-fi
-
 # Update packages
 sudo apt update
 
@@ -210,9 +205,16 @@ main() {
     printf '%s\n' '                        /____/                            .... is now installed!'
     printf "%s\n" "Please look over the ~/.bashrc file to select plugins, themes, and options"
     printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
-    exec bash; source $HOME/.bashrc
+    # exec bash; source $HOME/.bashrc
 }
 
 main
 
 ##### END #####
+
+# Link custom .bashrc
+if [[ ! -h $HOME/.bashrc ]]; then
+    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bashrc $HOME/.bashrc
+fi
+
+exec bash; source $HOME/.bashrc
