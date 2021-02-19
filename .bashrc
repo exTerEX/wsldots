@@ -95,7 +95,7 @@ source $OSH/oh-my-bash.sh
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-export SSH_KEY_PATH="~/.ssh/"
+export SSH_KEY_PATH="$HOME/.ssh/"
 
 # Set personal aliases, overriding those provided by oh-my-bash libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-bash
