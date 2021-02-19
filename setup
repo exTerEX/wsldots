@@ -221,6 +221,11 @@ if [[ ! -h $HOME/.bashrc ]]; then
     sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bashrc $HOME/.bashrc
 fi
 
+# Link custom .wgetrc
+if [[ ! -h $HOME/.wgetrc ]]; then
+    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.wgetrc $HOME/.wgetrc
+fi
+
 # Link custom folder
 if [[ ! -h $HOME/.custom ]]; then
     sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.custom $HOME/.custom
