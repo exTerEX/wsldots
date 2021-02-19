@@ -9,4 +9,3 @@ update () {
 upgrade () {
     sudo apt update && sudo apt full-upgrade -y && upgrade_oh_my_bash
 }
-
