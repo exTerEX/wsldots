@@ -4,12 +4,10 @@
 set -o errexit
 
 # Make folders
-if [[ ! -d $HOME/.config ]]; then
-    mkdir $HOME/.config
-fi
-
-if [[ ! -d $HOME/repo ]]; then
-    mkdir $HOME/repo
+for file in .config repo; do
+    if [[ ! -d $HOME/$file ]]; then
+        mkdir $HOME/$
+    fi
 fi
 
 # Link .config files
