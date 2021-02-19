@@ -6,9 +6,9 @@ set -o errexit
 # Make folders
 for file in .config repo; do
     if [[ ! -d $HOME/$file ]]; then
-        mkdir $HOME/$
+        mkdir $HOME/$file
     fi
-fi
+done
 
 # Update packages
 sudo apt update
@@ -205,7 +205,10 @@ main() {
     # exec bash; source $HOME/.bashrc
 }
 
-main
+# Run script only if oh-my-bash isn't installed
+if [[ ! -e $HOME/.oh-my-bash ]]; then
+	main
+fi
 
 ##### END #####
 
