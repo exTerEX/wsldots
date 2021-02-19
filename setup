@@ -8,6 +8,10 @@ if [[ ! -d $HOME/.config ]]; then
     mkdir $HOME/.config
 fi
 
+if [[ ! -d $HOME/repo ]]; then
+    mkdir $HOME/repo
+fi
+
 # Link .config files
 if [[ ! -h $HOME/.config/.bash_aliases ]]; then
     sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bash_aliases $HOME/.config/.bash_aliases
