@@ -223,8 +223,8 @@ fi
 
 # Link config files
 for file in .vimrc .wgetrc; do
-    if [[ ! -h $HOME/.wgetrc ]]; then
-        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/file $HOME/file
+    if [[ ! -h $HOME/$file ]]; then
+        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/$file $HOME/$file
     fi
 done
 
