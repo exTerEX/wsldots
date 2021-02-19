@@ -10,15 +10,6 @@ for file in .config repo; do
     fi
 fi
 
-# Link .config files
-if [[ ! -h $HOME/.config/.bash_aliases ]]; then
-    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bash_aliases $HOME/.config/.bash_aliases
-fi
-
-if [[ ! -h $HOME/.config/.bash_functions ]]; then
-    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bash_functions $HOME/.config/.bash_functions
-fi
-
 # Update packages
 sudo apt update
 
