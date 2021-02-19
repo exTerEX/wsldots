@@ -214,6 +214,13 @@ if [[ ! -h $HOME/.bashrc ]]; then
     sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bashrc $HOME/.bashrc
 fi
 
+# Link config files
+for file in .vimrc .wgetrc; do
+    if [[ ! -h $HOME/$file ]]; then
+        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/$file $HOME/$file
+    fi
+done
+
 # Link custom folder
 if [[ ! -h $HOME/.custom ]]; then
     sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.custom $HOME/.custom
