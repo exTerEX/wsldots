@@ -223,7 +223,12 @@ fi
 
 # Link custom .wgetrc
 if [[ ! -h $HOME/.wgetrc ]]; then
-    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.wgetrc $HOME/.wgetrc
+    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.wgetrc $HOME/.wgetrc
+fi
+
+# Link custom .vimrc
+if [[ ! -h $HOME/.vimrc ]]; then
+    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.vimrc $HOME/.vimrc
 fi
 
 # Link custom folder
