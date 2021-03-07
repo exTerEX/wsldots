@@ -65,4 +65,3 @@ export SSH_KEY_PATH="$HOME/.ssh/"
 
 # DISPLAY environment variable
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
-
