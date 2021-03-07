@@ -51,6 +51,8 @@ if $WSL; then
     USERPATH=/mnt/c/Users/$WINDOWS_USER
 fi
 
+# TODO: Using in-repo config as function and add user.name & user.email
+
 # Use Windows .gitconfig if possible else use repo version
 if $WSL; then
     if [[ -e $USERPATH/.gitconfig ]]; then
@@ -58,13 +60,18 @@ if $WSL; then
         sudo ln -sf $USERPATH/.gitconfig ~/
     else
         echo "Using repo .gitconfig file..."
-        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.gitconfig $HOME/
+        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.gitconfig $HOME/
     fi
 else
     if [[ ! -e $HOME/.gitconfig ]]; then
         echo "Using repo .gitconfig file..."
-        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.gitconfig $HOME/
+        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.gitconfig $HOME/
     fi
+fi
+
+if [[ ! -e $HOME/.tmux.conf ]]; then
+    echo "Softlink from .tmux.conf to $HOME..."
+    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.tmux.conf $HOME/.tmux.conf
 fi
 
 # Use Windows .ssh key and known_hosts if possible
