@@ -69,9 +69,16 @@ else
     fi
 fi
 
+# tmux.conf
 if [[ ! -e $HOME/.tmux.conf ]]; then
     echo "Softlink from .tmux.conf to $HOME..."
     sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.tmux.conf $HOME/.tmux.conf
+fi
+
+# gpg-agent.conf
+if [[ ! -e $HOME/gpg-agent.conf ]]; then
+    echo "Softlink from gpg-agent.conf to $HOME..."
+    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/gpg-agent.conf $HOME/gpg-agent.conf
 fi
 
 # Use Windows .ssh key and known_hosts if possible
