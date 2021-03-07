@@ -1,5 +1,6 @@
 [core]
-	autocrlf = true
+	autocrlf = input
+	editor = code
 [color]
 	ui = auto
 [color "branch"]
@@ -16,3 +17,7 @@
 	added = green bold
 	changed = yellow bold
 	untracked = red bold
+[status]
+	submoduleSummary = true
+[diff]
+	submodule = log
