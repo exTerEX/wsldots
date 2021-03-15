@@ -1,0 +1,3 @@
+[submodule "lib/alan"]
+	path = lib/alan
+	url = https://github.com/mpdunne/alan.git
