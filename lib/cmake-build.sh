@@ -16,20 +16,25 @@ apt --assume-yes install --no-install-recommends \
     libuv1-dev \
     libarchive-dev
 
+if [ ! -e $(cd -P -- "$(dirname -- "$0")" && pwd -P)/cmake/bootstrap ]
+then
+    echo "Download submodule..."
+    git submodule update --init --recursive
+fi
+
 cp -r $(cd -P -- "$(dirname -- "$0")" && pwd -P)/cmake /tmp/cmake > /dev/null
 
 cd /tmp/cmake
 
 ./bootstrap --system-libs --no-qt-gui --prefix=/usr/local
+
 make
 make install
 rm -r /tmp/cmake
 
 apt --assume-yes autoremove \
     libcurl4-openssl-dev \
-    libexpat1-dev \
     libjsoncpp-dev \
-    zlib1g-dev \
     libbz2-dev \
     liblzma-dev \
     libnghttp2-dev \
@@ -39,7 +44,7 @@ apt --assume-yes autoremove \
     libarchive-dev
 
 # Runtime
-apt install --no-install-recommends \
+apt --assume-yes install --no-install-recommends \
     libarchive13 \
     libcurl4 \
     libexpat1 \
