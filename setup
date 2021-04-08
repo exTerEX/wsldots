@@ -30,9 +30,6 @@ sudo update-alternatives --install /usr/local/bin/pip3 pip3 /usr/bin/pip3 1
 # Install golang
 sudo apt -y install --no-install-recommends golang
 
-# Install alan
-sudo ln -s $(cd -P -- "$(dirname -- "$0")" && pwd -P)/lib/alan/alan /usr/local/bin
-
 # Install T-coffee
 sudo apt -y install --no-install-recommends t-coffee
 
