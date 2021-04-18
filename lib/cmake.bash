@@ -1,9 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-apt update
+# Constatns
+CMAKE_VERSION="3.20.1"
 
 # Install build libraries
-apt --assume-yes install --no-install-recommends \
+sudo apt update
+sudo apt --assume-yes install --no-install-recommends \
     libcurl4-openssl-dev \
     libexpat1-dev \
     libjsoncpp-dev \
@@ -16,23 +18,20 @@ apt --assume-yes install --no-install-recommends \
     libuv1-dev \
     libarchive-dev
 
-if [ ! -e $(cd -P -- "$(dirname -- "$0")" && pwd -P)/cmake/bootstrap ]
-then
-    echo "Download submodule..."
-    git submodule update --init --recursive
-fi
-
-cp -r $(cd -P -- "$(dirname -- "$0")" && pwd -P)/cmake /tmp/cmake > /dev/null
-
+# Download source code
+git clone https://github.com/Kitware/CMake.git /tmp/cmake
 cd /tmp/cmake
+git checkout ${CMAKE_VERSION}
 
-./bootstrap --system-libs --no-qt-gui --prefix=/usr/local
+# Bootstrap
+sudo ./bootstrap --system-libs --no-qt-gui --prefix=/usr/local
 
+# Install
 make
-make install
-rm -r /tmp/cmake
+sudo make install
 
-apt --assume-yes autoremove \
+# Remove build dependencies
+sudo apt --assume-yes autoremove \
     libcurl4-openssl-dev \
     libjsoncpp-dev \
     libbz2-dev \
@@ -43,8 +42,8 @@ apt --assume-yes autoremove \
     libuv1-dev \
     libarchive-dev
 
-# Runtime
-apt --assume-yes install --no-install-recommends \
+# Install runtime dependencies
+sudo apt --assume-yes install --no-install-recommends \
     libarchive13 \
     libcurl4 \
     libexpat1 \
@@ -53,3 +52,7 @@ apt --assume-yes install --no-install-recommends \
     libuv1 \
     procps \
     zlib1g
+
+# Cleanup
+sudo apt clean
+sudo rm -r /tmp/cmake /var/lib/apt/lists/*
