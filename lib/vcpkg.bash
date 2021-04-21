@@ -17,7 +17,7 @@ sudo apt --assume-yes install --no-install-recommends \
 
 # TODO: Check if g++ >= 6
 
-# Download source code and change to released version
+# Download source code and change to specific version
 sudo git clone https://github.com/microsoft/vcpkg ${VCPKG_ROOT}
 cd ${VCPKG_ROOT}
 sudo git checkout ${VCPKG_VERSION}
