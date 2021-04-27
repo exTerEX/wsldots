@@ -14,10 +14,10 @@ done
 sudo apt update
 
 # Install C/C++ compiler
-sudo apt -y install --no-install-recommends build-essential
+sudo apt --yes install --no-install-recommends build-essential
 
 # Install python
-sudo apt -y install --no-install-recommends python3 python3-pip python3-tk python3-dev python3-venv pipenv
+sudo apt --yes install --no-install-recommends python3 python3-pip python3-tk python3-dev python3-venv pipenv
 
 ## Python alias / definitions
 sudo update-alternatives --install /usr/local/bin/python python /usr/bin/python3 1
@@ -27,11 +27,17 @@ sudo update-alternatives --install /usr/local/bin/python3 python3 /usr/bin/pytho
 sudo update-alternatives --install /usr/local/bin/pip pip /usr/bin/pip3 1
 sudo update-alternatives --install /usr/local/bin/pip3 pip3 /usr/bin/pip3 1
 
+# Install r & related tools
+sudo apt-add-repository --enable-source --yes ppa:marutter/rrutter4.0
+sudo apt-add-repository --enable-source --yes ppa:c2d4u.team/c2d4u4.0+
+sudo apt --yes install --no-install-recommends r-base r-recommended r-cran-formatr r-cran-rmarkdown r-cran-knitr r-cran-tinytex r-cran-tikzdevice r-cran-highr r-cran-rcurl
+
 # Install golang
-sudo apt -y install --no-install-recommends golang
+sudo apt-add-repository --enable-source --yes ppa:longsleep/golang-backports
+sudo apt --yes install --no-install-recommends golang
 
 # Install T-coffee
-sudo apt -y install --no-install-recommends t-coffee
+sudo apt --yes install --no-install-recommends t-coffee
 
 # Running under WSL (Windows Subsystem for Linux)
 if cat /proc/version | grep -q microsoft; then
@@ -100,7 +106,7 @@ if $WSL; then
 fi
 
 # Update image
-sudo apt -y full-upgrade
+sudo apt --yes full-upgrade
 
 ##### FROM: Oh-My-Bash installer.sh #####
 
