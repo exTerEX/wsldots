@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Constatns
+# Constants
 CMAKE_VERSION="3.20.1"
 
-# Install build libraries
+# Install build dependencies
 sudo apt update
 sudo apt --assume-yes install --no-install-recommends \
     libcurl4-openssl-dev \
