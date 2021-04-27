@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Constants
-CMAKE_VERSION="3.20.1"
+CMAKE_VERSION="v3.20.1"
 
 # Install build dependencies
 sudo apt update
