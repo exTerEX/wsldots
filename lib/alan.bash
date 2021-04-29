@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
-if [[ -e $(cd -P -- "$(dirname -- "$0")" && pwd -P)/lib/alan/alan ]]; then
-    sudo ln -s $(cd -P -- "$(dirname -- "$0")" && pwd -P)/lib/alan/alan /usr/local/bin
-fi
+# Constants
+ALAN_VERSION="2.1.1"
+
+# Download source code
+git clone https://github.com/mpdunne/alan.git /tmp/alan
+cd /tmp/alan
+git checkout ${ALAN_VERSION}
+
+# Install
+sudo mv /tmp/alan/alan /usr/local/bin
+
+# Cleanup
+sudo rm -r /tmp/alan
