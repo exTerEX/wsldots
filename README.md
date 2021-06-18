@@ -16,6 +16,10 @@ $ bash .dotfiles/setup
 
 Step 1 is optional, but storing dotfiles in $HOME is my preferential place of storage.
 
+## Extras
+
+In directory, `lib` different installation scripts for specific versions of programs I use are stored.
+
 ## License
 
 This project is licensed under `Unlicense`. For more details see [LICENSE](LICENSE).

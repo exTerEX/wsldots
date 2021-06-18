@@ -15,6 +15,10 @@ sudo apt --assume-yes install --no-install-recommends \
     cmake \
     ninja-build
 
+# Check if CMake is installed locally
+
+# Check if Ninja is installed locally
+
 # TODO: Check if g++ >= 6
 
 # Download source code and change to specific version
