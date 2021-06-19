@@ -4,11 +4,14 @@
 set -o errexit
 
 # Make folders
-for file in .config repo; do
+for file in .config .local/bin repo; do
     if [[ ! -d $HOME/$file ]]; then
-        mkdir $HOME/$file
+        mkdir -p $HOME/$file
     fi
 done
+
+# Add $HOME/.local/bin to path
+export PATH=$PATH:$HOME/.local/bin
 
 # Update packages
 sudo apt update
