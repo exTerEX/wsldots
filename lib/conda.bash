@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 
 # Constants
-CONDA_VERSION="4.9.2"
-DIRECTORY="/tmp"
-PYTHON="py39"
-FILE="Miniconda3-${PYTHON}_${CONDA_VERSION}-Linux-x86_64.sh"
+FILE="Miniconda3-latest-Linux-x86_64.sh"
 URL="https://repo.anaconda.com/miniconda/${FILE}"
 
 # Download binary
@@ -14,7 +11,7 @@ sudo wget ${URL} -O /tmp/miniconda.sh
 sudo chmod +x /tmp/miniconda.sh
 
 # Install
-sudo bash -b -p /usr/local/lib/conda /tmp/miniconda.sh
+sudo bash /tmp/miniconda.sh -b -p /usr/local/lib/conda
 sudo ln -sf /usr/local/lib/conda/bin/conda /usr/local/bin/conda
 
 # Cleanup
