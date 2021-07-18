@@ -2,7 +2,10 @@
 
 # Constants
 VCPKG_VERSION="2021.05.12"
-VCPKG_ROOT="/usr/local/src/vcpkg"
+
+if [[ ! -v VCPKG_ROOT ]]; then
+   VCPKG_ROOT="/usr/local/src/vcpkg"
+fi
 BIN_DIR="/usr/local/bin"
 
 # Install build libraries
