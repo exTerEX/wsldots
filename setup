@@ -3,9 +3,6 @@
 # Let script exit when a command fail
 set -o errexit
 
-# Add $HOME/.local/bin to path
-export PATH=$PATH:$HOME/.local/bin
-
 # Add Personal Package Archives
 if command -v add-apt-repository > /dev/null 2>&1; then
     # python PPA
@@ -89,6 +86,11 @@ if command -v wget > /dev/null 2>&1 && [ ! -e $HOME/.wgetrc ]; then
     sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.wgetrc $HOME/.wgetrc
 fi
 
+# Link .custom folder
+if [ ! -h $HOME/.custom ]; then
+    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.custom $HOME/.custom
+fi
+
 # oh-my-bash
 if [ ! -d $HOME/.oh-my-bash ]; then
     bash -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
@@ -99,15 +101,8 @@ if [ ! -h $HOME/.bashrc ]; then
     sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bashrc $HOME/.bashrc
 fi
 
-# Link .custom folder
-if [ ! -h $HOME/.custom ]; then
-    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.custom $HOME/.custom
-fi
-
-# Update packages
-sudo apt update
-
 # Update image
+sudo apt update
 sudo apt --yes full-upgrade
 
 exec bash; source $HOME/.bashrc

@@ -63,6 +63,9 @@ HIST_STAMPS="dd.mm.yyyy"
 # ssh
 export SSH_KEY_PATH="$HOME/.ssh/"
 
+# Add $HOME/.local/bin to path
+export PATH=$HOME/.local/bin:$PATH
+
 # vcpkg
 export VCPKG_FEATURE_FLAGS=manifests,$VCPKG_FEATURE_FLAGS
 export VCPKG_ROOT=/usr/local/src/vcpkg
