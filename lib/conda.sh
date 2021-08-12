@@ -13,7 +13,7 @@ fi
 sudo chmod +x /tmp/miniconda.sh
 
 source_path=$HOME/lib
-binary_path=/usr/local/bin/conda
+binary_path=$HOME/bin
 
 # Ensure folder existance
 if [ ! -d $source_path ]; then

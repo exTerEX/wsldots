@@ -8,19 +8,21 @@ git clone https://github.com/mpdunne/alan.git /tmp/alan
 cd /tmp/alan
 git checkout ${ALAN_VERSION}
 
-if [ ! -d $HOME/bin ]; then
-  mkdir -p $HOME/bin
+binary_path=$HOME/bin
+
+if [ ! -d $binary_path ]; then
+  mkdir -p $binary_path
 fi
 
-if [ -e $HOME/bin/alan ]; then
-    sudo rm -rf $HOME/bin/alan
+if [ -e $binary_path/alan ]; then
+    sudo rm -rf $binary_path/alan
 fi
 
 # Install
-sudo mv /tmp/alan/alan $HOME/bin
+sudo mv /tmp/alan/alan $binary_path
 
-sudo chown -R $(whoami):$(whoami) $HOME/bin/alan
-sudo chmod -R 744 $HOME/bin/alan
+sudo chown -R $(whoami):$(whoami) $binary_path/alan
+sudo chmod -R 744 $binary_path/alan
 
 # Cleanup
 sudo rm -r /tmp/alan

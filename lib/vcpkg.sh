@@ -1,12 +1,14 @@
-#!/usr/bin/env bash
+#!/lib/sh
 
 # Constants
 VCPKG_VERSION="2021.05.12"
 
+source_path=$HOME/lib
+binary_path=$HOME/bin
+
 if [[ ! -v VCPKG_ROOT ]]; then
-   VCPKG_ROOT="/usr/local/src/vcpkg"
+   VCPKG_ROOT=$source_path/vcpkg
 fi
-BIN_DIR="/usr/local/bin"
 
 # Install build libraries
 sudo apt update
@@ -29,7 +31,7 @@ fi
 
 # Check if previously installed
 if command -v vcpkg > /dev/null 2>&1; then
-   sudo rm -rf ${VCPKG_ROOT} ${BIN_DIR}/vcpkg
+   sudo rm -rf ${VCPKG_ROOT} ${binary_path}/vcpkg
 fi
 
 # Download source code and change to specific version
@@ -41,7 +43,7 @@ sudo git checkout ${VCPKG_VERSION}
 sudo ./bootstrap-vcpkg.sh -disableMetrics -useSystemBinaries
 
 # Create shortcut to /usr/local/bin
-sudo ln -sf ${VCPKG_ROOT}/vcpkg ${BIN_DIR}
+sudo ln -sf ${VCPKG_ROOT}/vcpkg ${binary_path}
 
 # Change file ownership
 sudo chown -R ${USER} .
