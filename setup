@@ -29,75 +29,94 @@ if cat /proc/version | grep -q microsoft; then
     # Windows User path
     USERPATH=/mnt/c/Users/$(powershell.exe '$env:UserName' | sed -e 's/\r//g')
 
-    # Find .gitignore in Windows or import from config/
+    # Find .gitignore in Windows or import from dotfiles
     if [ -e $USERPATH/.gitconfig ]; then
         echo "Using Windows .gitconfig file..."
-        sudo ln -sf $USERPATH/.gitconfig ~/
+        sudo ln -sf $USERPATH/.gitconfig $HOME/
+        sudo chown -h $(whoami):$(whoami) $HOME/.gitconfig
     else
         echo "Using repo .gitconfig file..."
-        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.gitconfig $HOME/
+        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.gitconfig $HOME/
+        sudo chown -h $(whoami):$(whoami) $HOME/.gitconfig
+    fi
+
+    # Find .gitignore in Windows or import from dotfiles
+    if [ -e $USERPATH/.gitignore ]; then
+        echo "Using Windows .gitignore file..."
+        sudo ln -sf $USERPATH/.gitignore $HOME/
+        sudo chown -h $(whoami):$(whoami) $HOME/.gitignore
+    else
+        echo "Using repo .gitignore file..."
+        ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.gitignore $HOME/
+        chown -h $(whoami):$(whoami) $HOME/.gitignore
     fi
 
     # Find SSH key in Windows and import to WSL
     if [ ! -e $HOME/.ssh ]; then
         echo "Copying .ssh files to .ssh/..."
-        cp -r $USERPATH/.ssh ~/
+        cp -r $USERPATH/.ssh $HOME/
     fi
 
-    sudo chmod 600 ~/.ssh/*
+    sudo chmod 600 $HOME/.ssh/*
 
     if [ ! -h $HOME/.ssh/known_hosts ]; then
         echo "Creating symlink to known_hosts..."
-        sudo ln -sf $USERPATH/.ssh/known_hosts ~/.ssh/known_hosts
+        sudo ln -sf $USERPATH/.ssh/known_hosts $HOME/.ssh/known_hosts
+        sudo chown -h $(whoami):$(whoami) $HOME/.ssh/known_hosts
     fi
 
-    # Find gpg key and import from Windows
+    # TODO: Find gpg key and import from Windows
 else
     echo "Running in normal mode..."
 
-    # Import .gitignore from config/
+    # Import .gitconfig
     if [[ ! -e $HOME/.gitconfig ]]; then
         echo "Using repo .gitconfig file..."
-        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.gitconfig $HOME/
+        ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.gitconfig $HOME/
+        chown -h $(whoami):$(whoami) $HOME/.gitconfig
+    fi
+
+    # Import .gitignore
+    if [[ ! -e $HOME/.gitignore ]]; then
+        echo "Using repo .gitignore file..."
+        ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.gitignore $HOME/
+        chown -h $(whoami):$(whoami) $HOME/.gitignore
     fi
 fi
 
 # Create user's private bin if not exist
 if [ ! -d "$HOME/bin" ] ; then
-    mdkir $HOME/bin
+    mkdir -p $HOME/bin
 fi
 
 if [ ! -d "$HOME/.local/bin" ] ; then
-    mdkir $HOME/.local/bin
+    mkdir -p $HOME/.local/bin
 fi
 
 # tmux.conf
-if command -v add-apt-repository > /dev/null 2>&1 && [ ! -e $HOME/.tmux.conf ]; then
-    echo "Softlink from .tmux.conf to $HOME..."
-    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.tmux.conf $HOME/.tmux.conf
-fi
+ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.tmux.conf $HOME/
+chown -h $(whoami):$(whoami) $HOME/.tmux.conf
 
 # gpg-agent.conf
-if command -v gpg > /dev/null 2>&1 && [ ! -e $HOME/gpg-agent.conf ]; then
-    echo "Softlink from gpg-agent.conf to $HOME..."
-    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/gpg-agent.conf $HOME/gpg-agent.conf
-fi
+ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/gpg-agent.conf $HOME/
+chown -h $(whoami):$(whoami) $HOME/gpg-agent.conf
 
 # .vimrc
-if command -v vim > /dev/null 2>&1 && [ ! -e $HOME/.vimrc ]; then
-    echo "Softlink from .vimrc to $HOME..."
-    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.vimrc $HOME/.vimrc
-fi
+ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.vimrc $HOME/
+chown -h $(whoami):$(whoami) $HOME/.vimrc
 
 # .wgetrc
-if command -v wget > /dev/null 2>&1 && [ ! -e $HOME/.wgetrc ]; then
-    echo "Softlink from .wgetrc to $HOME..."
-    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/config/.wgetrc $HOME/.wgetrc
-fi
+ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.wgetrc $HOME/
+chown -h $(whoami):$(whoami) $HOME/.wgetrc
+
+# .condarc
+ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.condarc $HOME/
+chown -h $(whoami):$(whoami) $HOME/.condarc
 
 # Link .custom folder
 if [ ! -h $HOME/.custom ]; then
-    sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.custom $HOME/.custom
+    ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.custom $HOME/
+    chown -h $(whoami):$(whoami) $HOME/.custom
 fi
 
 if [ -n "$BASH_VERSION" ]; then
@@ -230,11 +249,14 @@ if [ -n "$BASH_VERSION" ]; then
 
     # Link custom .bashrc
     if [[ ! -h $HOME/.bashrc ]]; then
-        sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bashrc $HOME/.bashrc
+        ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.bashrc $HOME/
     fi
+
+    chown -h $(whoami):$(whoami) $HOME/.bashrc
 fi
 
 # Link custom .profile
-sudo ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.profile $HOME/.profile
+ln -sf $(cd -P -- "$(dirname -- "$0")" && pwd -P)/.profile $HOME/.profile
+chown -h $(whoami):$(whoami) $HOME/.profile
 
 exec bash; source $HOME/.bashrc
