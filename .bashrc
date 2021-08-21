@@ -53,7 +53,7 @@ fi
 
 # vcpkg
 export VCPKG_FEATURE_FLAGS=manifests,$VCPKG_FEATURE_FLAGS
-export VCPKG_ROOT=/usr/local/src/vcpkg
+export VCPKG_ROOT=$HOME/lib/vcpkg
 
 # DISPLAY environment variable
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
