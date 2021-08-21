@@ -6,7 +6,7 @@ VCPKG_VERSION="2021.05.12"
 source_path=$HOME/lib
 binary_path=$HOME/bin
 
-if [[ ! -v VCPKG_ROOT ]]; then
+if [ -z $VCPKG_ROOT ]; then
    VCPKG_ROOT=$source_path/vcpkg
 fi
 
@@ -31,19 +31,19 @@ fi
 
 # Check if previously installed
 if command -v vcpkg > /dev/null 2>&1; then
-   sudo rm -rf ${VCPKG_ROOT} ${binary_path}/vcpkg
+   rm -rf ${VCPKG_ROOT} ${binary_path}/vcpkg
 fi
 
 # Download source code and change to specific version
-sudo git clone https://github.com/microsoft/vcpkg.git ${VCPKG_ROOT}
+git clone https://github.com/microsoft/vcpkg.git ${VCPKG_ROOT}
 cd ${VCPKG_ROOT}
-sudo git checkout ${VCPKG_VERSION}
+git checkout ${VCPKG_VERSION}
 
 # Run bootstrap script
 sudo ./bootstrap-vcpkg.sh -disableMetrics -useSystemBinaries
 
 # Create shortcut to /usr/local/bin
-sudo ln -sf ${VCPKG_ROOT}/vcpkg ${binary_path}
+ln -sf ${VCPKG_ROOT}/vcpkg ${binary_path}
 
 # Change file ownership
 sudo chown -R ${USER} .
@@ -57,3 +57,4 @@ sudo rm -rf *.md *.txt .git* bootstrap* docs
 # Cleanup
 sudo apt clean
 sudo rm -rf /var/lib/apt/lists/*
+
