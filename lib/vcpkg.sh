@@ -17,7 +17,9 @@ sudo apt --assume-yes install --no-install-recommends \
     g++ \
     pkg-config \
     unzip \
-    zip
+    zip \
+    make \
+    dpkg-dev
 
 # Check if CMake is installed locally
 if ! command -v cmake > /dev/null 2>&1; then
