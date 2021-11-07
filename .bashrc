@@ -58,6 +58,9 @@ export VCPKG_ROOT=$HOME/lib/vcpkg
 # DISPLAY environment variable
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
 
+# Fixing a problem with git signing
+export GPG_TTY=$(tty)
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/exterex/lib/conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
