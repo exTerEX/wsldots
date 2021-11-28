@@ -5,7 +5,7 @@ export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 export ZSH="/home/exterex/.oh-my-zsh"
 
 # Theme
-ZSH_THEME="robbyrussell"
+ZSH_THEME="ys"
 
 # Update settings
 zstyle ':omz:update' mode reminder
