@@ -111,6 +111,17 @@ ln -sf $DOTFILES/custom $HOME/.custom
 chown -h $(whoami):$(whoami) $HOME/.custom
 
 ### VSCode
+code --install-extension ms-python.python
+code --install-extension ms-python.vscode-pylance
+code --install-extension ms-toolsai.jupyter
+code --install-extension ms-vscode.cpptools
+code --install-extension ms-vscode.cmake-tools
+code --install-extension golang.go
+code --install-extension mechatroner.rainbow-csv
+code --install-extension tamasfe.even-better-toml
+code --install-extension docsmsft.docs-markdown
+code --install-extension ikuyadeu.r
+
 ln -sf $DOTFILES/vscode/settings.json $HOME/.vscode-server/data/Machine/settings.json
 
 ### Zsh
