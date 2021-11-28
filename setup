@@ -7,8 +7,6 @@ set -o errexit
 DOTFILES=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 WINDOWS=/mnt/c/Users/$(powershell.exe '$env:UserName' | sed -e 's/\r//g')
 
-#sudo -s
-
 ### Create directories
 mkdir -p $HOME/bin $HOME/.local/bin $HOME/.config/git $HOME/.ssh $HOME/.gpg
 
@@ -69,7 +67,8 @@ fi
 
 # config
 if [ -e $WINDOWS/.ssh/config ]; then
-    ln -sf $WINDOWS/.ssh/config $HOME/.ssh/config
+    cp $WINDOWS/.ssh/config $HOME/.ssh/config
+    chmod 700 $HOME/.ssh/config
     chown -h $(whoami):$(whoami) $HOME/.ssh/config
 fi
 
