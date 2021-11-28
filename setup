@@ -110,6 +110,9 @@ chown -h $(whoami):$(whoami) $HOME/.condarc
 ln -sf $DOTFILES/custom $HOME/.custom
 chown -h $(whoami):$(whoami) $HOME/.custom
 
+### VSCode
+ln -sf $DOTFILES/vscode/settings.json $HOME/.vscode-server/data/Machine/settings.json
+
 ### Zsh
 sudo apt -y install --no-install-recommends zsh
 sudo chsh -s /usr/bin/zsh $(whoami)
