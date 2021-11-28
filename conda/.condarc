@@ -5,6 +5,7 @@ always_yes: true
 auto_activate_base: true
 auto_update_conda: true
 channels:
+  - schrodinger
   - pytorch
   - nvidia
   - intel
