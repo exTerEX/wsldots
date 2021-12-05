@@ -91,6 +91,7 @@ fi
 gpg --import $HOME/.gpg/private_keys.gpg
 
 ln -sf $DOTFILES/gpg/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
+chown -h $(whoami):$(whoami) $HOME/.gnupg/gpg-agent.conf
 
 ### Tmux
 ln -sf $DOTFILES/tmux/.tmux.conf $HOME/.tmux.conf
@@ -103,6 +104,10 @@ chown -h $(whoami):$(whoami) $HOME/.vimrc
 ### Wget
 ln -sf $DOTFILES/wget/.wgetrc $HOME/.wgetrc
 chown -h $(whoami):$(whoami) $HOME/.wgetrc
+
+### Curl
+ln -sf $DOTFILES/curl/.curlrc $HOME/.curlrc
+chown -h $(whoami):$(whoami) $HOME/.curlrc
 
 ### Conda
 ln -sf $DOTFILES/conda/.condarc $HOME/.condarc
