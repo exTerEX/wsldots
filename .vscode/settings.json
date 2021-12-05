@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        ".gitmessage": "properties"
+        ".gitmessage": "properties",
+        ".aliases": "shellscript",
+        "setup": "shellscript"
     },
 }
