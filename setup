@@ -90,6 +90,8 @@ fi
 
 gpg --import $HOME/.gpg/private_keys.gpg
 
+ln -sf $DOTFILES/gpg/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
+
 ### Tmux
 ln -sf $DOTFILES/tmux/.tmux.conf $HOME/.tmux.conf
 chown -h $(whoami):$(whoami) $HOME/.tmux.conf
@@ -111,16 +113,19 @@ ln -sf $DOTFILES/custom $HOME/.custom
 chown -h $(whoami):$(whoami) $HOME/.custom
 
 ### VSCode
-code --install-extension ms-python.python
-code --install-extension ms-python.vscode-pylance
-code --install-extension ms-toolsai.jupyter
 code --install-extension ms-vscode.cpptools
 code --install-extension ms-vscode.cmake-tools
-code --install-extension golang.go
-code --install-extension mechatroner.rainbow-csv
-code --install-extension tamasfe.even-better-toml
 code --install-extension docsmsft.docs-markdown
+code --install-extension tamasfe.even-better-toml
+code --install-extension grapecity.gc-excelviewer
+code --install-extension golang.go
+code --install-extension ms-toolsai.jupyter
+code --install-extension james-yu.latex-workshop
+code --install-extension esbenp.prettier-vscode
+code --install-extension ms-python.python
+code --install-extension ms-python.vscode-pylance
 code --install-extension ikuyadeu.r
+code --install-extension mechatroner.rainbow-csv
 
 ln -sf $DOTFILES/vscode/settings.json $HOME/.vscode-server/data/Machine/settings.json
 
