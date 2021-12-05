@@ -1,0 +1,5 @@
+install.packages("languageserver")
+install.packages("httpgd")
+install.packages("ggpubr")
+install.packages("janitor")
+install.packages("caret", dependencies = c("Depends", "Suggests"))

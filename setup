@@ -25,6 +25,8 @@ else
     echo "add-apt-repository not available"
 fi
 
+sudo apt install python3-pip
+
 ### Git
 
 # config
@@ -133,6 +135,11 @@ code --install-extension ikuyadeu.r
 code --install-extension mechatroner.rainbow-csv
 
 ln -sf $DOTFILES/vscode/settings.json $HOME/.vscode-server/data/Machine/settings.json
+
+### R
+sudo apt install --no-install-recommends r-base r-cran-rmarkdown r-cran-tidyverse
+pip install -U radian
+Rscript --vanilla R/packages.R
 
 ### Zsh
 sudo apt -y install --no-install-recommends zsh
