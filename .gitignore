@@ -12,18 +12,3 @@
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
-
-### R ###
-
-# History files
-.Rhistory
-.Rapp.history
-
-# Session Data files
-.RData
-
-# User-specific files
-.Ruserdata
-
-# R Environment Variables
-.Renviron
