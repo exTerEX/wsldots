@@ -10,6 +10,12 @@ WINDOWS=/mnt/c/Users/$(powershell.exe '$env:UserName' | sed -e 's/\r//g')
 ### Create directories
 mkdir -p $HOME/bin $HOME/.local/bin $HOME/.config/git $HOME/.ssh $HOME/.gpg
 
+### Update
+apt update -qq
+
+### Add public keys
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+
 ### PPA's
 if command -v add-apt-repository > /dev/null 2>&1; then
     # python PPA
@@ -135,11 +141,6 @@ code --install-extension ikuyadeu.r
 code --install-extension mechatroner.rainbow-csv
 
 ln -sf $DOTFILES/vscode/settings.json $HOME/.vscode-server/data/Machine/settings.json
-
-### R
-sudo apt install --no-install-recommends r-base r-cran-rmarkdown r-cran-tidyverse
-pip install -U radian
-Rscript --vanilla R/packages.R
 
 ### Zsh
 sudo apt -y install --no-install-recommends zsh
