@@ -137,7 +137,6 @@ code --install-extension james-yu.latex-workshop
 code --install-extension esbenp.prettier-vscode
 code --install-extension ms-python.python
 code --install-extension ms-python.vscode-pylance
-code --install-extension ikuyadeu.r
 code --install-extension mechatroner.rainbow-csv
 
 ln -sf $DOTFILES/vscode/settings.json $HOME/.vscode-server/data/Machine/settings.json
