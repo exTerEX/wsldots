@@ -28,18 +28,7 @@ HIST_STAMPS="dd/mm/yyyy"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    autopep8
-    cp
-    gh
-    git
-    git-auto-fetch
-    git-extras
-    pip
-    pipenv
-    python
-    ubuntu
-)
+plugins=()
 
 source $ZSH/oh-my-zsh.sh
 
@@ -62,3 +51,19 @@ export VCPKG_ROOT=$HOME/lib/vcpkg
 
 # Git signing
 export GPG_TTY=$(tty)
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/exterex/lib/conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/exterex/lib/conda/etc/profile.d/conda.sh" ]; then
+        . "/home/exterex/lib/conda/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/exterex/lib/conda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

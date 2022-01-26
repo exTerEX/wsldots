@@ -8,6 +8,7 @@
     "cmake.configureSettings": {
         "CMAKE_TOOLCHAIN_FILE": "/home/exterex/lib/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
+    "cmake.configureOnOpen": true,
     "cmake.configureArgs": [
         "-Wno-dev"
     ],
