@@ -47,7 +47,7 @@ fi
 
 # VCPKG
 export VCPKG_FEATURE_FLAGS=manifests,$VCPKG_FEATURE_FLAGS
-export VCPKG_ROOT=$HOME/lib/vcpkg
+export VCPKG_ROOT=/usr/local/lib/vcpkg
 
 # Git signing
 export GPG_TTY=$(tty)
