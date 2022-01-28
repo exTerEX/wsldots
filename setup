@@ -11,7 +11,7 @@ WINDOWS=/mnt/c/Users/$(powershell.exe '$env:UserName' | sed -e 's/\r//g')
 mkdir -p $HOME/bin $HOME/.local/bin $HOME/.config/git $HOME/.ssh $HOME/.gpg
 
 ### Update
-apt update -qq
+sudo apt update -qq
 
 ### Add public keys
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
@@ -31,7 +31,7 @@ else
     echo "add-apt-repository not available"
 fi
 
-sudo apt install python3-pip
+sudo apt -y install --no-install-recommends python3-pip
 
 ### Git
 
@@ -133,10 +133,8 @@ code --install-extension tamasfe.even-better-toml
 code --install-extension grapecity.gc-excelviewer
 code --install-extension golang.go
 code --install-extension ms-toolsai.jupyter
-code --install-extension james-yu.latex-workshop
 code --install-extension esbenp.prettier-vscode
 code --install-extension ms-python.python
-code --install-extension ms-python.vscode-pylance
 code --install-extension mechatroner.rainbow-csv
 
 ln -sf $DOTFILES/vscode/settings.json $HOME/.vscode-server/data/Machine/settings.json
