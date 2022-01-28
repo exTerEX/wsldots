@@ -3,5 +3,5 @@
         ".gitmessage": "properties",
         ".aliases": "shellscript",
         "setup": "shellscript"
-    },
+    }
 }
