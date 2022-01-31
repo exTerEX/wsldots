@@ -28,18 +28,7 @@ HIST_STAMPS="dd/mm/yyyy"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    autopep8
-    cp
-    gh
-    git
-    git-auto-fetch
-    git-extras
-    pip
-    pipenv
-    python
-    ubuntu
-)
+plugins=()
 
 source $ZSH/oh-my-zsh.sh
 
@@ -51,14 +40,17 @@ export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='code'
+    export EDITOR="code"
 else
-    export EDITOR='mvim'
+    export EDITOR="mvim"
 fi
 
 # VCPKG
 export VCPKG_FEATURE_FLAGS=manifests,$VCPKG_FEATURE_FLAGS
-export VCPKG_ROOT=$HOME/lib/vcpkg
+export VCPKG_ROOT=/usr/local/lib/vcpkg
 
 # Git signing
 export GPG_TTY=$(tty)
+
+# Alias
+alias python="python3"
