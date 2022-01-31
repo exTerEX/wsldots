@@ -8,6 +8,7 @@
     "cmake.configureSettings": {
         "CMAKE_TOOLCHAIN_FILE": "/usr/local/lib/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
+    "cmake.configureOnOpen": true,
     "cmake.configureArgs": [
         "-Wno-dev"
     ],

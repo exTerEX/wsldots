@@ -54,3 +54,19 @@ export GPG_TTY=$(tty)
 
 # Alias
 alias python="python3"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/exterex/lib/conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/exterex/lib/conda/etc/profile.d/conda.sh" ]; then
+        . "/home/exterex/lib/conda/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/exterex/lib/conda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
