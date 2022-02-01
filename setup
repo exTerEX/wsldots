@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Let script exit when a command fail
-set -o errexit
+set -e
 
 ### Variables
 DOTFILES=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
@@ -138,6 +138,9 @@ ln -sf $DOTFILES/vscode/settings.json $HOME/.vscode-server/data/Machine/settings
 ### Zsh
 sudo apt -y install --no-install-recommends zsh
 sudo chsh -s /usr/bin/zsh $(whoami)
+
+# Remove Bash
+sudo apt --allow-remove-essential autoremove --purge bash
 
 # oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
