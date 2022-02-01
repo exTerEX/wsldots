@@ -121,10 +121,6 @@ chown -h $(whoami):$(whoami) $HOME/.curlrc
 ln -sf $DOTFILES/conda/.condarc $HOME/.condarc
 chown -h $(whoami):$(whoami) $HOME/.condarc
 
-### Custom
-ln -sf $DOTFILES/custom $HOME/.custom
-chown -h $(whoami):$(whoami) $HOME/.custom
-
 ### VSCode
 code --install-extension ms-vscode.cpptools
 code --install-extension ms-vscode.cmake-tools

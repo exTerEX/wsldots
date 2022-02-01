@@ -4,6 +4,12 @@ export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH="/home/exterex/.oh-my-zsh"
 
+# Include definition files
+for FILE in custom/{exports,aliases,functions}.sh; do
+    [ -r "$FILE" ] && [ -f "$FILE" ] && source "$FILE";
+done;
+unset FILE;
+
 # Theme
 ZSH_THEME="ys"
 
@@ -37,23 +43,6 @@ export MANPATH="/usr/local/man:$MANPATH"
 
 # Language environment
 export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR="code"
-else
-    export EDITOR="mvim"
-fi
-
-# VCPKG
-export VCPKG_FEATURE_FLAGS=manifests,$VCPKG_FEATURE_FLAGS
-export VCPKG_ROOT=/usr/local/lib/vcpkg
-
-# Git signing
-export GPG_TTY=$(tty)
-
-# Alias
-alias python="python3"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
