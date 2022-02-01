@@ -40,9 +40,9 @@ export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='code'
+    export EDITOR="code"
 else
-    export EDITOR='mvim'
+    export EDITOR="mvim"
 fi
 
 # VCPKG
@@ -51,6 +51,9 @@ export VCPKG_ROOT=/usr/local/lib/vcpkg
 
 # Git signing
 export GPG_TTY=$(tty)
+
+# Alias
+alias python="python3"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
