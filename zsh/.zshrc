@@ -5,7 +5,7 @@ export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 export ZSH="/home/exterex/.oh-my-zsh"
 
 # Include definition files
-for FILE in custom/{exports,aliases,functions}.sh; do
+for FILE in {exports,aliases,functions}.sh; do
     [ -r "$FILE" ] && [ -f "$FILE" ] && source "$FILE"
 done
 unset FILE
