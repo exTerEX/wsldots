@@ -5,7 +5,7 @@ export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 export ZSH="/home/exterex/.oh-my-zsh"
 
 # Include definition files
-for FILE in {exports,aliases,functions}.sh; do
+for FILE in .{exports,aliases,functions}; do
     [ -r "$FILE" ] && [ -f "$FILE" ] && source "$FILE"
 done
 unset FILE
@@ -44,6 +44,48 @@ export MANPATH="/usr/local/man:$MANPATH"
 # Language environment
 export LANG=en_US.UTF-8
 
+# Git
+export GPG_TTY=$(tty)
+
+# vcpkg
+export VCPKG_FEATURE_FLAGS=manifests,$VCPKG_FEATURE_FLAGS
+export VCPKG_ROOT=/usr/local/lib/vcpkg
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+    export EDITOR="vim"
+else
+    export EDITOR="code"
+fi
+
+alias python="python3"
+
+mkd () {
+    mkdir -p -- $* ; cd -- $* || exit ;
+}
+
+update () {
+    if command -v apt > /dev/null 2>&1; then
+        sudo apt update && sudo apt upgrade -y
+    fi
+}
+
+upgrade () {
+    if command -v apt > /dev/null 2>&1; then
+        sudo apt update && sudo apt full-upgrade -y 
+    fi
+
+    if command -v upgrade_oh_my_bash > /dev/null 2>&1; then
+        upgrade_oh_my_bash
+    fi
+}
+
+gitc () {
+    git clone $*
+
+    cd `echo $* | sed -n -e 's/^.*\/\([^.]*\)\(.git\)*/\1/p'`
+}
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/usr/local/lib/conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -58,4 +100,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
