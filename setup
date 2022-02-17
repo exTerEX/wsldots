@@ -8,7 +8,7 @@ DOTFILES=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 WINDOWS=/mnt/c/Users/$(powershell.exe '$env:UserName' | sed -e 's/\r//g')
 
 ### Create directories
-mkdir -p $HOME/bin $HOME/.local/bin $HOME/.config/git $HOME/.ssh $HOME/.gpg
+mkdir -p $HOME/.config/git $HOME/.ssh $HOME/.gpg
 
 ### Update
 sudo apt update -qq
@@ -132,27 +132,37 @@ code --install-extension ms-toolsai.jupyter
 code --install-extension esbenp.prettier-vscode
 code --install-extension ms-python.python
 code --install-extension mechatroner.rainbow-csv
+code --install-extension ms-azuretools.vscode-docker
+code --install-extension njpwerner.autodocstring
+code --install-extension gruntfuggly.todo-tree
 
 ln -sf $DOTFILES/vscode/settings.json $HOME/.vscode-server/data/Machine/settings.json
 
 ### Zsh
-sudo apt -y install --no-install-recommends zsh
-sudo chsh -s /usr/bin/zsh $(whoami)
+if [ -z "$ZSH_VERSION" ]; then
+    sudo apt -y install --no-install-recommends zsh
+    sudo chsh -s /usr/bin/zsh $(whoami)
 
-# Remove Bash
-sudo apt --allow-remove-essential autoremove --purge bash
-
-# oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    # Remove Bash
+    sudo apt -y --allow-remove-essential autoremove --purge bash
+fi
 
 # config
-if [ -n "$ZSH_VERSION" ]; then
+if [ ! -z "$ZSH_VERSION" ]; then
+    # oh-my-zsh
+    URL="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+    if [ ! -d "$HOME/.oh-my-zsh" ]; then
+        sh -c "$(curl -fsSL $URL)" "" --unattended
+    fi
+
     ln -sf $DOTFILES/zsh/.zshrc $HOME/.zshrc
     chown -h $(whoami):$(whoami) $HOME/.zshrc
+
+    rm .bash_logout .bash_history .bashrc
 fi
 
 ### System
 ln -sf $DOTFILES/.profile $HOME/.profile
 chown -h $(whoami):$(whoami) $HOME/.profile
 
-exec bash; source $HOME/.bashrc
+exec zsh; source $HOME/.zshrc
