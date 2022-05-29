@@ -86,6 +86,8 @@ gitc () {
     cd `echo $* | sed -n -e 's/^.*\/\([^.]*\)\(.git\)*/\1/p'`
 }
 
+[ -e /usr/bin/python3.10 ] && alias python3="python3.10"
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/usr/local/lib/conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -100,3 +102,9 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+bashcompinit
+
+source /usr/local/lib/vcpkg/scripts/vcpkg_completion.zsh
+
+export PATH=/usr/share/swift/usr/bin:$PATH
