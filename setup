@@ -13,26 +13,6 @@ mkdir -p $HOME/.config/git $HOME/.ssh $HOME/.gpg
 ### Update
 sudo apt update -qq
 
-### Add public keys
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
-
-### PPA's
-if command -v add-apt-repository > /dev/null 2>&1; then
-    # python PPA
-    sudo add-apt-repository --enable-source --yes ppa:deadsnakes/ppa
-
-    # R PPA
-    sudo apt-add-repository --enable-source --yes ppa:marutter/rrutter4.0
-    sudo apt-add-repository --enable-source --yes ppa:c2d4u.team/c2d4u4.0+
-
-    # Golang
-    sudo apt-add-repository --enable-source --yes ppa:longsleep/golang-backports
-else
-    echo "add-apt-repository not available"
-fi
-
-sudo apt -y install --no-install-recommends python3-pip
-
 ### Git
 
 # config
@@ -117,10 +97,6 @@ chown -h $(whoami):$(whoami) $HOME/.wgetrc
 ln -sf $DOTFILES/curl/.curlrc $HOME/.curlrc
 chown -h $(whoami):$(whoami) $HOME/.curlrc
 
-### Conda
-ln -sf $DOTFILES/conda/.condarc $HOME/.condarc
-chown -h $(whoami):$(whoami) $HOME/.condarc
-
 ### VSCode
 code --install-extension ms-vscode.cpptools
 code --install-extension ms-vscode.cmake-tools
@@ -142,9 +118,6 @@ ln -sf $DOTFILES/vscode/settings.json $HOME/.vscode-server/data/Machine/settings
 if [ -z "$ZSH_VERSION" ]; then
     sudo apt -y install --no-install-recommends zsh
     sudo chsh -s /usr/bin/zsh $(whoami)
-
-    # Remove Bash
-    sudo apt -y --allow-remove-essential autoremove --purge bash
 fi
 
 # config
