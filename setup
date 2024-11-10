@@ -5,137 +5,110 @@ set -e
 
 ### Variables
 DOTFILES=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
-WINDOWS=/mnt/c/Users/$(powershell.exe '$env:UserName' | sed -e 's/\r//g')
+PWSH_PATH=/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
+WINDOWS_PATH=/mnt/c/Users/$($PWSH_PATH '$env:UserName' | sed -e 's/\r//g')
+
+echo Dotfile path: $DOTFILES
+echo Powershell path: $PWSH_PATH
+echo Windows home path: $WINDOWS_PATH
 
 ### Create directories
-mkdir -p $HOME/.config/git $HOME/.ssh $HOME/.gpg
-
-### Update
-sudo apt update -qq
+mkdir -p $HOME/.config/git $HOME/.gpg $HOME/.ssh
+echo Created essential directories
 
 ### Git
 
-# config
+# Config file
 ln -sf $DOTFILES/git/.gitconfig $HOME/.gitconfig
 chown -h $(whoami):$(whoami) $HOME/.gitconfig
 
-# ignore
-ln -sf $DOTFILES/git/.gitignore $HOME/.config/git/.gitignore
-chown -h $(whoami):$(whoami) $HOME/.config/git/.gitignore
+# Other git files
+for file in .gitignore .gitattributes .gitmessage; do
+    ln -sf $DOTFILES/git/$file $HOME/.config/git/$file
+    chown -h $(whoami):$(whoami) $HOME/.config/git/$file
 
-# attributes
-ln -sf $DOTFILES/git/.gitattributes $HOME/.config/git/.gitattributes
-chown -h $(whoami):$(whoami) $HOME/.config/git/.gitattributes
-
-# message
-ln -sf $DOTFILES/git/.gitmessage $HOME/.config/git/.gitmessage
-chown -h $(whoami):$(whoami) $HOME/.config/git/.gitmessage
+    echo Created softlink to $HOME/.config/git/$file to $file
+done
 
 ### SSH
 
 # private
-if [ -e $WINDOWS/.ssh/id_rsa ]; then
-    cp $WINDOWS/.ssh/id_rsa $HOME/.ssh/id_rsa
-    chmod 700 $HOME/.ssh/id_rsa
-    chown -h $(whoami):$(whoami) $HOME/.ssh/id_rsa
+if [ -e $WINDOWS_PATH/.ssh/id_ed25519 ]; then
+    cp $WINDOWS_PATH/.ssh/id_ed25519 $HOME/.ssh/id_ed25519
+    chmod 700 $HOME/.ssh/id_ed25519
+    chown -h $(whoami):$(whoami) $HOME/.ssh/id_ed25519
 fi
 
 # public
-if [ -e $WINDOWS/.ssh/id_rsa.pub ]; then
-    cp $WINDOWS/.ssh/id_rsa.pub $HOME/.ssh/id_rsa.pub
-    chmod 700 $HOME/.ssh/id_rsa.pub
-    chown -h $(whoami):$(whoami) $HOME/.ssh/id_rsa.pub
+if [ -e $WINDOWS_PATH/.ssh/id_ed25519.pub ]; then
+    cp $WINDOWS_PATH/.ssh/id_ed25519.pub $HOME/.ssh/id_ed25519.pub
+    chmod 700 $HOME/.ssh/id_ed25519.pub
+    chown -h $(whoami):$(whoami) $HOME/.ssh/id_ed25519.pub
 fi
 
 # hosts
-if [ -e $WINDOWS/.ssh/known_hosts ]; then
-    ln -sf $WINDOWS/.ssh/known_hosts $HOME/.ssh/known_hosts
+if [ -e $WINDOWS_PATH/.ssh/known_hosts ]; then
+    ln -sf $WINDOWS_PATH/.ssh/known_hosts $HOME/.ssh/known_hosts
     chown -h $(whoami):$(whoami) $HOME/.ssh/known_hosts
 fi
 
 # config
-if [ -e $WINDOWS/.ssh/config ]; then
-    cp $WINDOWS/.ssh/config $HOME/.ssh/config
+if [ -e $WINDOWS_PATH/.ssh/config ]; then
+    cp $WINDOWS_PATH/.ssh/config $HOME/.ssh/config
     chmod 700 $HOME/.ssh/config
     chown -h $(whoami):$(whoami) $HOME/.ssh/config
 fi
 
+echo Fixed ssh config
+
 ### GPG
 
+echo $WINDOWS_PATH/.gpg/private_keys.gpg
+
 # private
-if [ -e $WINDOWS/.gpg/private_keys.gpg ]; then
-    cp $WINDOWS/.gpg/private_keys.gpg $HOME/.gpg/private_keys.gpg
+if [ -e $WINDOWS_PATH/.gpg/private_keys.gpg ]; then
+    cp $WINDOWS_PATH/.gpg/private_keys.gpg $HOME/.gpg/private_keys.gpg
     chmod 700 $HOME/.gpg/private_keys.gpg
     chown -h $(whoami):$(whoami) $HOME/.gpg/private_keys.gpg
 fi
 
 # public
-if [ -e $WINDOWS/.gpg/public_keys.gpg ]; then
-    cp $WINDOWS/.gpg/public_keys.gpg $HOME/.gpg/public_keys.gpg
+if [ -e $WINDOWS_PATH/.gpg/public_keys.gpg ]; then
+    cp $WINDOWS_PATH/.gpg/public_keys.gpg $HOME/.gpg/public_keys.gpg
     chmod 700 $HOME/.gpg/public_keys.gpg
     chown -h $(whoami):$(whoami) $HOME/.gpg/public_keys.gpg
 fi
+
+echo Moved GPG keys into WSL
 
 gpg --import $HOME/.gpg/private_keys.gpg
 
 ln -sf $DOTFILES/gpg/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
 chown -h $(whoami):$(whoami) $HOME/.gnupg/gpg-agent.conf
 
-### Tmux
-ln -sf $DOTFILES/tmux/.tmux.conf $HOME/.tmux.conf
-chown -h $(whoami):$(whoami) $HOME/.tmux.conf
-
-### Vim
-ln -sf $DOTFILES/vim/.vimrc $HOME/.vimrc
-chown -h $(whoami):$(whoami) $HOME/.vimrc
-
 ### Wget
 ln -sf $DOTFILES/wget/.wgetrc $HOME/.wgetrc
 chown -h $(whoami):$(whoami) $HOME/.wgetrc
 
-### Curl
-ln -sf $DOTFILES/curl/.curlrc $HOME/.curlrc
-chown -h $(whoami):$(whoami) $HOME/.curlrc
-
-### VSCode
-code --install-extension ms-vscode.cpptools
-code --install-extension ms-vscode.cmake-tools
-code --install-extension docsmsft.docs-markdown
-code --install-extension tamasfe.even-better-toml
-code --install-extension grapecity.gc-excelviewer
-code --install-extension golang.go
-code --install-extension ms-toolsai.jupyter
-code --install-extension esbenp.prettier-vscode
-code --install-extension ms-python.python
-code --install-extension mechatroner.rainbow-csv
-code --install-extension ms-azuretools.vscode-docker
-code --install-extension njpwerner.autodocstring
-code --install-extension gruntfuggly.todo-tree
-
-ln -sf $DOTFILES/vscode/settings.json $HOME/.vscode-server/data/Machine/settings.json
-
-### Zsh
-if [ -z "$ZSH_VERSION" ]; then
-    sudo apt -y install --no-install-recommends zsh
-    sudo chsh -s /usr/bin/zsh $(whoami)
-fi
-
-# config
-if [ ! -z "$ZSH_VERSION" ]; then
-    # oh-my-zsh
-    URL="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-    if [ ! -d "$HOME/.oh-my-zsh" ]; then
-        sh -c "$(curl -fsSL $URL)" "" --unattended
+### Bash
+if [ ! -z "$BASH_VERSION" ]; then
+    # oh-my-bash
+    URL="https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh"
+    if [ ! -d "$HOME/.oh-my-bash" ]; then
+        bash -c "$(curl -fsSL $URL)" "" --unattended
     fi
 
-    ln -sf $DOTFILES/zsh/.zshrc $HOME/.zshrc
-    chown -h $(whoami):$(whoami) $HOME/.zshrc
-
-    rm .bash_logout .bash_history .bashrc
+    ln -sf $DOTFILES/bash/.bashrc $HOME/.bashrc
+    chown -h $(whoami):$(whoami) $HOME/.bashrc
 fi
+
+echo Installed oh-my-bash and configured
 
 ### System
 ln -sf $DOTFILES/.profile $HOME/.profile
 chown -h $(whoami):$(whoami) $HOME/.profile
 
-exec zsh; source $HOME/.zshrc
+echo Added softlink to .profile
+
+# Restart
+exec bash; source $HOME/.bashrc

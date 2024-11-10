@@ -28,7 +28,7 @@ completions=(docker docker-compose git makefile pip ssh)
 aliases=(general)
 
 # Enabled plugins
-plugins=(git golang)
+plugins=(git)
 
 source $OSH/oh-my-bash.sh
 
@@ -50,10 +50,6 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
-
-# vcpkg
-export VCPKG_FEATURE_FLAGS=manifests,$VCPKG_FEATURE_FLAGS
-export VCPKG_ROOT=$HOME/lib/vcpkg
 
 # DISPLAY environment variable
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
