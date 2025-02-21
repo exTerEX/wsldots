@@ -104,6 +104,13 @@ fi
 
 echo Installed oh-my-bash and configured
 
+mkdir -p $HOME/.config/bash
+
+for file in "aliases" "exports" "functions"; do
+    ln -sf $DOTFILES/bash/.bash_${file} $HOME/.config/bash/.bash_${file}
+    chown -h $(whoami):$(whoami) $HOME/.config/bash/.bash_${file}
+done
+
 ### System
 ln -sf $DOTFILES/.profile $HOME/.profile
 chown -h $(whoami):$(whoami) $HOME/.profile
