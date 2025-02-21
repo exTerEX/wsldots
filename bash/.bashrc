@@ -35,12 +35,6 @@ source $OSH/oh-my-bash.sh
 # Disable auto update for oh-my-bash
 DISABLE_AUTO_UPDATE="true"
 
-# Command execution time stamp format
-HIST_STAMPS="dd.mm.yyyy"
-
-# SSH
-export SSH_KEY_PATH="$HOME/.ssh/"
-
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
@@ -50,12 +44,6 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
-
-# DISPLAY environment variable
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
-
-# Fixing a problem with git signing
-export GPG_TTY=$(tty)
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
