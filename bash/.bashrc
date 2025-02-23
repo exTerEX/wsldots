@@ -30,6 +30,8 @@ aliases=(general)
 # Enabled plugins
 plugins=(git)
 
+export GPG_TTY=$(tty)
+
 source $OSH/oh-my-bash.sh
 
 # Disable auto update for oh-my-bash

@@ -63,25 +63,25 @@ echo Fixed ssh config
 
 ### GPG
 
-echo $WINDOWS_PATH/.gpg/private_keys.gpg
+#echo $WINDOWS_PATH/.gpg/private_keys.gpg
 
 # private
-if [ -e $WINDOWS_PATH/.gpg/private_keys.gpg ]; then
-    cp $WINDOWS_PATH/.gpg/private_keys.gpg $HOME/.gpg/private_keys.gpg
-    chmod 700 $HOME/.gpg/private_keys.gpg
-    chown -h $(whoami):$(whoami) $HOME/.gpg/private_keys.gpg
-fi
+#if [ -e $WINDOWS_PATH/.gpg/private_keys.gpg ]; then
+#    cp $WINDOWS_PATH/.gpg/private_keys.gpg $HOME/.gpg/private_keys.gpg
+#    chmod 700 $HOME/.gpg/private_keys.gpg
+#    chown -h $(whoami):$(whoami) $HOME/.gpg/private_keys.gpg
+#fi
 
 # public
-if [ -e $WINDOWS_PATH/.gpg/public_keys.gpg ]; then
-    cp $WINDOWS_PATH/.gpg/public_keys.gpg $HOME/.gpg/public_keys.gpg
-    chmod 700 $HOME/.gpg/public_keys.gpg
-    chown -h $(whoami):$(whoami) $HOME/.gpg/public_keys.gpg
-fi
+#if [ -e $WINDOWS_PATH/.gpg/public_keys.gpg ]; then
+#    cp $WINDOWS_PATH/.gpg/public_keys.gpg $HOME/.gpg/public_keys.gpg
+#    chmod 700 $HOME/.gpg/public_keys.gpg
+#    chown -h $(whoami):$(whoami) $HOME/.gpg/public_keys.gpg
+#fi
 
-echo Moved GPG keys into WSL
+#echo Moved GPG keys into WSL
 
-gpg --import $HOME/.gpg/private_keys.gpg
+#gpg --import $HOME/.gpg/private_keys.gpg
 
 ln -sf $DOTFILES/gpg/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
 chown -h $(whoami):$(whoami) $HOME/.gnupg/gpg-agent.conf
@@ -103,13 +103,6 @@ if [ ! -z "$BASH_VERSION" ]; then
 fi
 
 echo Installed oh-my-bash and configured
-
-mkdir -p $HOME/.config/bash
-
-for file in "aliases" "exports" "functions"; do
-    ln -sf $DOTFILES/bash/.bash_${file} $HOME/.config/bash/.bash_${file}
-    chown -h $(whoami):$(whoami) $HOME/.config/bash/.bash_${file}
-done
 
 ### System
 ln -sf $DOTFILES/.profile $HOME/.profile
