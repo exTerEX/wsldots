@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Let script exit when a command fail
 set -e
@@ -32,20 +32,6 @@ done
 
 ### SSH
 
-# private
-if [ -e $WINDOWS_PATH/.ssh/id_ed25519 ]; then
-    cp $WINDOWS_PATH/.ssh/id_ed25519 $HOME/.ssh/id_ed25519
-    chmod 700 $HOME/.ssh/id_ed25519
-    chown -h $(whoami):$(whoami) $HOME/.ssh/id_ed25519
-fi
-
-# public
-if [ -e $WINDOWS_PATH/.ssh/id_ed25519.pub ]; then
-    cp $WINDOWS_PATH/.ssh/id_ed25519.pub $HOME/.ssh/id_ed25519.pub
-    chmod 700 $HOME/.ssh/id_ed25519.pub
-    chown -h $(whoami):$(whoami) $HOME/.ssh/id_ed25519.pub
-fi
-
 # hosts
 if [ -e $WINDOWS_PATH/.ssh/known_hosts ]; then
     ln -sf $WINDOWS_PATH/.ssh/known_hosts $HOME/.ssh/known_hosts
@@ -63,25 +49,23 @@ echo Fixed ssh config
 
 ### GPG
 
-#echo $WINDOWS_PATH/.gpg/private_keys.gpg
+# Copy GPG key files from Windows
+for keyfile in private_keys.gpg public_keys.gpg; do
+    if [ -e "$WINDOWS_PATH/.gpg/$keyfile" ]; then
+        cp "$WINDOWS_PATH/.gpg/$keyfile" "$HOME/.gpg/$keyfile"
+        chmod 700 "$HOME/.gpg/$keyfile"
+        chown -h $(whoami):$(whoami) "$HOME/.gpg/$keyfile"
+    fi
+done
 
-# private
-#if [ -e $WINDOWS_PATH/.gpg/private_keys.gpg ]; then
-#    cp $WINDOWS_PATH/.gpg/private_keys.gpg $HOME/.gpg/private_keys.gpg
-#    chmod 700 $HOME/.gpg/private_keys.gpg
-#    chown -h $(whoami):$(whoami) $HOME/.gpg/private_keys.gpg
-#fi
+# Import GPG keys
+for keyfile in "$HOME/.gpg"/*.gpg; do
+    if [ -f "$keyfile" ]; then
+        gpg --import "$keyfile"
+    fi
+done
 
-# public
-#if [ -e $WINDOWS_PATH/.gpg/public_keys.gpg ]; then
-#    cp $WINDOWS_PATH/.gpg/public_keys.gpg $HOME/.gpg/public_keys.gpg
-#    chmod 700 $HOME/.gpg/public_keys.gpg
-#    chown -h $(whoami):$(whoami) $HOME/.gpg/public_keys.gpg
-#fi
-
-#echo Moved GPG keys into WSL
-
-#gpg --import $HOME/.gpg/private_keys.gpg
+echo Imported GPG keys
 
 ln -sf $DOTFILES/gpg/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
 chown -h $(whoami):$(whoami) $HOME/.gnupg/gpg-agent.conf
@@ -103,6 +87,10 @@ if [ ! -z "$BASH_VERSION" ]; then
 fi
 
 echo Installed oh-my-bash and configured
+
+# Install packages
+mkdir -p $HOME/.local/bin
+curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="$HOME/.local/bin" sh
 
 ### System
 ln -sf $DOTFILES/.profile $HOME/.profile

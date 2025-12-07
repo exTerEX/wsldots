@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        ".gitmessage": "properties",
-        ".aliases": "shellscript",
-        "setup": "shellscript",
-        ".bash_*": "shellscript"
-    }
-}

@@ -2,41 +2,37 @@ if [[ -f ~/.bashrc ]]; then
   source ~/.bashrc
 fi
 
-# Load seperate files
+# Load separate configuration files
 for file in ~/.config/bash/.bash_{aliases,functions,exports}; do
     [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
 
-# Append to the Bash history file
-shopt -s histappend;
-
-# Autocorrect typos in path names when using 'cd'
-shopt -s cdspell;
-
-# Case-insensitive globbing
-shopt -s nocaseglob;
-
-# Increase Bash history size. Allow 32e3 entries.
+# Bash history settings
+shopt -s histappend;  # Append to history file instead of overwriting
 export HISTSIZE="32768";
 export HISTFILESIZE="${HISTSIZE}";
-export HISTCONTROL="ignoreboth";
+export HISTCONTROL="ignoreboth";  # Ignore duplicates and commands starting with space
 
-# Prefer US English and use UTF-8.
+# Bash behavior improvements
+shopt -s cdspell;      # Autocorrect typos in path names when using 'cd'
+shopt -s nocaseglob;   # Case-insensitive globbing
+
+# Locale settings
 export LANG="en_US.UTF-8";
 export LC_ALL="en_US.UTF-8";
 
-# SSH
+# SSH configuration
 export SSH_KEY_PATH="$HOME/.ssh/"
 
-# GPG
+# GPG configuration
 export GPG_KEY_PATH="$HOME/.gpg/"
+export GPG_TTY=$(tty)  # Required for GPG signing in git
 
-# Fixing a problem with git signing
-export GPG_TTY=$(tty)
+# WSL2 DISPLAY variable for X server
+if [[ -f /etc/resolv.conf ]]; then
+    export DISPLAY="$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0.0"
+fi
 
-# DISPLAY environment variable
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
-
-# Reload the shell (i.e. invoke as a login shell)
-alias reload="exec ${SHELL} -l"
+# Utility aliases
+alias reload="exec ${SHELL} -l"  # Reload the shell as a login shell

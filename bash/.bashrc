@@ -5,8 +5,9 @@ export OSH=$HOME/.oh-my-bash
 # it'll load a random theme each time that oh-my-bash is loaded.
 OSH_THEME="axin"
 
-# Auto update every 30 days.
+# Auto update settings
 export UPDATE_OSH_DAYS=30
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -30,35 +31,18 @@ aliases=(general)
 # Enabled plugins
 plugins=(git)
 
-export GPG_TTY=$(tty)
-
-source $OSH/oh-my-bash.sh
-
-# Disable auto update for oh-my-bash
-DISABLE_AUTO_UPDATE="true"
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+# Source oh-my-bash
+if [[ -f $OSH/oh-my-bash.sh ]]; then
+    source $OSH/oh-my-bash.sh
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/exterex/lib/conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/exterex/lib/conda/etc/profile.d/conda.sh" ]; then
-        . "/home/exterex/lib/conda/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/exterex/lib/conda/bin:$PATH"
+# Add user bin directories to PATH
+for bin_dir in "$HOME/bin" "$HOME/.local/bin"; do
+    if [[ -d "$bin_dir" ]] && [[ ":$PATH:" != *":$bin_dir:"* ]]; then
+        PATH="$bin_dir:$PATH"
     fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+done
 
+# UV shell completion
+eval "$(uv generate-shell-completion bash)"
+eval "$(uvx --generate-shell-completion bash)"
