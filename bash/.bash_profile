@@ -22,13 +22,6 @@ shopt -s nocaseglob;   # Case-insensitive globbing
 export LANG="en_US.UTF-8";
 export LC_ALL="en_US.UTF-8";
 
-# SSH configuration
-export SSH_KEY_PATH="$HOME/.ssh/"
-
-# GPG configuration
-export GPG_KEY_PATH="$HOME/.gpg/"
-export GPG_TTY=$(tty)  # Required for GPG signing in git
-
 # WSL2 DISPLAY variable for X server
 if [[ -f /etc/resolv.conf ]]; then
     export DISPLAY="$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0.0"

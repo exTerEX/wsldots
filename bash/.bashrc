@@ -31,6 +31,13 @@ aliases=(general)
 # Enabled plugins
 plugins=(git)
 
+# SSH configuration
+export SSH_KEY_PATH="$HOME/.ssh/"
+
+# GPG configuration
+export GPG_KEY_PATH="$HOME/.gpg/"
+export GPG_TTY=$(tty)  # Required for GPG signing in git
+
 # Source oh-my-bash
 if [[ -f $OSH/oh-my-bash.sh ]]; then
     source $OSH/oh-my-bash.sh
