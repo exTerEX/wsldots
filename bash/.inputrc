@@ -1,0 +1,8 @@
+# Readline enhancements
+set editing-mode vi
+set show-all-if-ambiguous on
+set completion-ignore-case on
+set bell-style none
+TAB: menu-complete
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward

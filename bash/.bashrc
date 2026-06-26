@@ -50,6 +50,17 @@ for bin_dir in "$HOME/bin" "$HOME/.local/bin"; do
     fi
 done
 
+# Load user Bash configuration modules
+for file in "$HOME/.config/bash/.bash_aliases" "$HOME/.config/bash/.bash_functions" "$HOME/.config/bash/.bash_exports"; do
+    if [[ -r "$file" ]]; then
+        source "$file"
+    fi
+done
+
 # UV shell completion
-eval "$(uv generate-shell-completion bash)"
-eval "$(uvx --generate-shell-completion bash)"
+if command -v uv >/dev/null 2>&1; then
+    eval "$(uv generate-shell-completion bash)"
+fi
+if command -v uvx >/dev/null 2>&1; then
+    eval "$(uvx --generate-shell-completion bash)"
+fi

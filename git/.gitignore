@@ -1,4 +1,7 @@
-### Linux ###
+### Global Git ignore ###
+# Universal ignore patterns applied via ~/.config/git/.gitignore
+
+# Linux
 *~
 
 # temporary files which can be created if a process still has a handle open of a deleted file
@@ -12,3 +15,12 @@
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+
+# AI instruction and skill files
+*.instructions.md
+*.prompt.md
+*.agent.md
+*.skill.md
+copilot-instructions.md
+AGENTS.md
+CLAUDE.md
