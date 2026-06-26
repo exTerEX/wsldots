@@ -1,6 +1,14 @@
 # Export environment variables and WSL-specific settings
-export LANG="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
+if locale -a 2>/dev/null | grep -iq '^en_US\.utf-8$'; then
+    export LANG="en_US.UTF-8"
+    export LC_ALL="en_US.UTF-8"
+elif locale -a 2>/dev/null | grep -iq '^c\.utf-8$'; then
+    export LANG="C.UTF-8"
+    export LC_ALL="C.UTF-8"
+else
+    export LANG="C"
+    unset LC_ALL
+fi
 
 if [ -r /proc/sys/kernel/osrelease ] && grep -qi microsoft /proc/sys/kernel/osrelease 2>/dev/null; then
     if [ -r /etc/resolv.conf ]; then

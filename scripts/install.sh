@@ -110,6 +110,9 @@ if command -v apt-get >/dev/null 2>&1; then
     echo "Installing APT packages from scripts/packages.txt"
     sudo apt-get update
     xargs -r sudo apt-get install -y < <(grep -E -v '^\s*(#|$)' "$DOTFILES/scripts/packages.txt")
+    if command -v locale >/dev/null 2>&1 && ! locale -a 2>/dev/null | grep -iq '^en_US\.utf-8$'; then
+        sudo locale-gen en_US.UTF-8
+    fi
 fi
 
 if [ ! -d "$HOME/.oh-my-bash" ]; then
