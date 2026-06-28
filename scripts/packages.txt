@@ -1,0 +1,20 @@
+# Packages installed on Ubuntu-based WSL2 systems.
+# Comments and blank lines are ignored by the installer.
+
+curl
+wget
+git
+gnupg
+openssh-client
+ca-certificates
+make
+build-essential
+software-properties-common
+lsb-release
+apt-transport-https
+less
+rsync
+unzip
+fzf
+ripgrep
+neovim

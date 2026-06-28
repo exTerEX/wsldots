@@ -50,39 +50,17 @@ for bin_dir in "$HOME/bin" "$HOME/.local/bin"; do
     fi
 done
 
-# UV shell completion
-eval "$(uv generate-shell-completion bash)"
-eval "$(uvx --generate-shell-completion bash)"
-
-# Nvidia CUDA toolkit 12.6
-export PATH=/usr/local/cuda-12.6/bin${PATH:+:${PATH}}
-export LD_LIBRARY_PATH=/usr/local/cuda-12.6/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-. "$HOME/.cargo/env"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/exterex/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/exterex/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/exterex/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/exterex/miniconda3/bin:$PATH"
+# Load user Bash configuration modules
+for file in "$HOME/.config/bash/.bash_aliases" "$HOME/.config/bash/.bash_functions" "$HOME/.config/bash/.bash_exports"; do
+    if [[ -r "$file" ]]; then
+        source "$file"
     fi
+done
+
+# UV shell completion
+if command -v uv >/dev/null 2>&1; then
+    eval "$(uv generate-shell-completion bash)"
 fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-# --- Antigravity / Chrome Bridge Setup ---
-# 1. Get Windows Gateway IP dynamically
-WIN_IP=$(ip route show | grep -i default | awk '{ print $3}')
-
-# 2. Start socat in background if not already running
-if ! pgrep -f "socat TCP-LISTEN:9222" > /dev/null; then
-    socat TCP-LISTEN:9222,fork,reuseaddr TCP:$WIN_IP:9222 &> /dev/null &
+if command -v uvx >/dev/null 2>&1; then
+    eval "$(uvx --generate-shell-completion bash)"
 fi
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
