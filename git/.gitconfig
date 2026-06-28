@@ -55,4 +55,7 @@
 [submodule]
 	recurse = true
 [credential]
-	helper = cache
+	helper = store
+[safe]
+	directory = //wsl.localhost/Ubuntu/home/exterex/repo/amplicon
+	directory = *
